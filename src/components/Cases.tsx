@@ -130,7 +130,7 @@ const Cases = () => {
 
   return (
     <section id="cases" className="py-16 bg-secondary/30 overflow-hidden">
-      <div className="container mx-auto max-w-[900px] px-6">
+      <div className="container mx-auto max-w-5xl px-6">
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
@@ -160,13 +160,14 @@ const Cases = () => {
             </button>
           </div>
         </div>
+      </div>
 
-      {/* Carousel with edge gradients */}
+      {/* Carousel with edge gradients - full width */}
       <div className="relative">
-        {/* Left gradient fade - closer to center */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-secondary/30 via-secondary/20 to-transparent z-10 pointer-events-none" />
-        {/* Right gradient fade - closer to center */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-secondary/30 via-secondary/20 to-transparent z-10 pointer-events-none" />
+        {/* Left gradient fade - larger */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-56 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
+        {/* Right gradient fade - larger */}
+        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-56 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
         
         <Carousel
           setApi={setApi}
@@ -215,7 +216,6 @@ const Cases = () => {
             ))}
           </CarouselContent>
         </Carousel>
-      </div>
       </div>
 
       {/* Progress bar */}

@@ -4,9 +4,10 @@ import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/com
 import Autoplay from 'embla-carousel-autoplay';
 
 const whyThisShowsLevel = [
-  'Conduzi do zero — sem esperar briefing.',
-  'Integrei design, dev e dados sem intermediário.',
-  'Entreguei resultado mensurável, não só tela.',
+  'Conduzi do zero — sem esperar que alguém me passasse o que fazer.',
+  'Integrei áreas diferentes (design, dev, dados) sem precisar de intermediário.',
+  'Entreguei resultado mensurável, não só "tela pronta".',
+  'O projeto virou referência interna — e eu não precisei de supervisor.',
 ];
 
 const resolved = [
@@ -124,18 +125,18 @@ const Challenge = () => {
           </div>
 
           {/* Right column - Why this shows my level + Tools */}
-          <div className="space-y-4">
-            <div className="p-5 rounded-2xl bg-card border border-border hover:border-primary/20 transition-all">
+          <div className="flex flex-col gap-4">
+            <div className="flex-1 p-5 rounded-2xl bg-card border border-border hover:border-primary/20 transition-all">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium text-foreground">Por que isso mostra meu nível atual</span>
               </div>
               
-              <ul className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <ul className="space-y-3">
                 {whyThisShowsLevel.map((item, index) => (
                   <li 
                     key={index}
-                    className="flex items-start gap-2 group cursor-default"
+                    className="flex items-start gap-3 group cursor-default"
                     onMouseEnter={() => setHoveredItem(index)}
                     onMouseLeave={() => setHoveredItem(null)}
                   >
@@ -146,7 +147,7 @@ const Challenge = () => {
                     }`}>
                       {index + 1}
                     </span>
-                    <span className={`text-xs leading-relaxed transition-colors ${
+                    <span className={`text-sm leading-relaxed transition-colors ${
                       hoveredItem === index ? 'text-foreground' : 'text-muted-foreground'
                     }`}>
                       {item}
@@ -193,12 +194,6 @@ const Challenge = () => {
           </div>
         </div>
 
-        {/* Closing message */}
-        <div className="text-center">
-          <p className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary/5 border border-primary/20 text-sm text-foreground font-medium animate-float-slow">
-            Esse é o momento certo de formalizar pra ficar sustentável.
-          </p>
-        </div>
       </div>
     </section>
   );

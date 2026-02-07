@@ -168,24 +168,19 @@ const Cases = () => {
           
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center gap-2">
-          <button 
-  onClick={() => {
-    setIsPaused(true);
-    api?.scrollPrev();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button 
+              onClick={() => api?.scrollPrev()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
             <span className="text-xs text-muted-foreground px-2">
               {current + 1} / {cases.length}
             </span>
-            <button onClick={() => {
-    setIsPaused(true);
-    api?.scrollNext();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button 
+              onClick={() => api?.scrollNext()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
           </div>

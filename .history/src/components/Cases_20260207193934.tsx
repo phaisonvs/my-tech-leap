@@ -111,8 +111,7 @@ const Cases = () => {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-
+  
   const autoplayPlugin = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
@@ -131,27 +130,25 @@ const Cases = () => {
 
   useEffect(() => {
     if (!api) return;
-  
+
     let intervalId: number;
-  
+
     const scrollToPrev = () => {
-      if (isPaused) return;
-      
       if (api.canScrollPrev()) {
         api.scrollPrev();
       } else {
         api.scrollTo(cases.length - 1);
       }
     };
-  
+
     intervalId = window.setInterval(scrollToPrev, 1500);
-  
+
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
       }
     };
-  }, [api, isPaused]);
+  }, [api]);
 
   return (
     <section id="cases" className="py-16 bg-secondary/30 overflow-hidden">
@@ -168,24 +165,19 @@ const Cases = () => {
           
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center gap-2">
-          <button 
-  onClick={() => {
-    setIsPaused(true);
-    api?.scrollPrev();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button 
+              onClick={() => api?.scrollPrev()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
             <span className="text-xs text-muted-foreground px-2">
               {current + 1} / {cases.length}
             </span>
-            <button onClick={() => {
-    setIsPaused(true);
-    api?.scrollNext();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button 
+              onClick={() => api?.scrollNext()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
           </div>
@@ -193,8 +185,7 @@ const Cases = () => {
       </div>
 
       {/* Carousel with edge gradients - full width */}
-      <div className="relative"   onMouseEnter={() => setIsPaused(true)}
-  onMouseLeave={() => setIsPaused(false)}>
+      <div className="relative">
         {/* Left gradient fade - larger */}
         <div className="absolute left-0 top-0 bottom-0 w-32 md:w-56 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
         {/* Right gradient fade - larger */}

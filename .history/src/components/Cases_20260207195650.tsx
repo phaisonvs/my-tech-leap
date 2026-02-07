@@ -180,7 +180,8 @@ const Cases = () => {
             <span className="text-xs text-muted-foreground px-2">
               {current + 1} / {cases.length}
             </span>
-            <button onClick={() => {
+            <button 
+  onClick={() => {
     setIsPaused(true);
     api?.scrollNext();
   }}

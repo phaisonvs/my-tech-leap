@@ -152,18 +152,9 @@ const Cases = () => {
     };
   }, [api, isPaused]);
 
-  const { ref, isVisible } = useInView();
-
   return (
     <section id="cases" className="py-16 bg-secondary/30 overflow-hidden">
-      <div 
-        ref={ref as React.RefObject<HTMLDivElement>}
-        className={`container mx-auto max-w-5xl px-6 transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
-        }`}
-      >
+      <div className="container mx-auto max-w-5xl px-6">
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">

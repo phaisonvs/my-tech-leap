@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Check, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 
 const iOwn = [
   'Padrão de interface e qualidade do front nas jornadas críticas.',
@@ -20,6 +21,7 @@ const iDontOwn = [
 const Scope = () => {
   const [activeTab, setActiveTab] = useState<'own' | 'delegate'>('own');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { ref, isVisible } = useInView();
   
   const items = activeTab === 'own' ? iOwn : iDontOwn;
 
@@ -33,7 +35,14 @@ const Scope = () => {
 
   return (
     <section id="escopo" className="py-16 px-6 bg-secondary/30">
-      <div className="container mx-auto max-w-4xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-8">
           O que eu quero assumir como Tech Lead
         </h2>
@@ -72,13 +81,18 @@ const Scope = () => {
               <div 
                 key={`${activeTab}-${index}`}
                 onClick={() => setCurrentIndex(index)}
-                className={`flex gap-4 p-5 rounded-xl border cursor-pointer transition-all ${
+                className={`flex gap-4 p-5 rounded-xl border cursor-pointer transition-all duration-700 ease-out ${
                   index === currentIndex
                     ? activeTab === 'own' 
                       ? 'bg-card border-primary/40 shadow-lg shadow-primary/5' 
                       : 'bg-card border-gold-muted/40 shadow-lg shadow-gold-muted/5'
                     : 'bg-card/50 border-border hover:border-primary/20'
-                } ${index === currentIndex ? 'animate-fade-in' : 'opacity-60 hover:opacity-80'}`}
+                } ${
+                  isVisible 
+                    ? index === currentIndex ? 'opacity-100 translate-y-0' : 'opacity-60 translate-y-0 hover:opacity-80'
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 <span className={`w-8 h-8 rounded-lg text-sm flex items-center justify-center flex-shrink-0 font-medium transition-all ${
                   index === currentIndex

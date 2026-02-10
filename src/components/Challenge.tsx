@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Clock, Star, CheckCircle2, AlertCircle, Check } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useInView } from '@/hooks/use-in-view';
 
 const whyThisShowsLevel = [
   'Conduzi do zero — sem esperar que alguém me passasse o que fazer.',
@@ -70,9 +71,18 @@ const Challenge = () => {
     };
   }, [carouselApi]);
 
+  const { ref, isVisible } = useInView();
+
   return (
     <section id="desafio" className="py-20 px-6">
-      <div className="container mx-auto max-w-5xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">
@@ -100,7 +110,13 @@ const Challenge = () => {
 
             {/* Resolved / Pending cards */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-5 rounded-xl bg-card border border-border hover:border-primary/20 transition-all group">
+              <div className={`p-5 rounded-xl bg-card border border-border hover:border-primary/20 transition-all duration-700 ease-out group ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? '200ms' : '0ms' }}
+              >
                 <div className="flex items-center gap-2 mb-3">
                   <CheckCircle2 className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
                   <span className="text-xs font-medium text-foreground">O que já foi resolvido</span>
@@ -121,7 +137,13 @@ const Challenge = () => {
                 </ul>
               </div>
 
-              <div className="p-5 rounded-xl bg-card border border-border hover:border-gold-muted/30 transition-all group">
+              <div className={`p-5 rounded-xl bg-card border border-border hover:border-gold-muted/30 transition-all duration-700 ease-out group ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? '350ms' : '0ms' }}
+              >
                 <div className="flex items-center gap-2 mb-3">
                   <AlertCircle className="w-4 h-4 text-gold group-hover:scale-110 transition-transform" />
                   <span className="text-xs font-medium text-foreground">O que falta pra sustentar</span>

@@ -1,4 +1,5 @@
 import { Briefcase, CheckCircle2, Target } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 
 const bullets = [
   {
@@ -16,9 +17,18 @@ const bullets = [
 ];
 
 const TLDR = () => {
+  const { ref, isVisible } = useInView();
+
   return (
     <section id="tldr" className="py-16 px-6 bg-secondary/30">
-      <div className="container mx-auto max-w-4xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <h2 className="text-lg font-semibold text-foreground mb-6">
           TL;DR (10 segundos)
         </h2>
@@ -27,8 +37,12 @@ const TLDR = () => {
           {bullets.map((item, index) => (
             <div 
               key={index} 
-              className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all opacity-0 animate-fade-in group"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-700 ease-out group ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }}
             >
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-all">
                 <item.icon className="w-5 h-5 text-primary transition-transform group-hover:scale-125 group-hover:rotate-6" />

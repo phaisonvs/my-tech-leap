@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowRight, Compass, FileText, BarChart3, Layers, CheckCircle, Users } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 
 const bullets = [
   {
@@ -36,10 +37,18 @@ const bullets = [
 
 const HowIWork = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { ref, isVisible } = useInView();
 
   return (
     <section id="como-trabalho" className="py-16 px-6">
-      <div className="container mx-auto max-w-4xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-8">
           Como eu gosto de trabalhar (na prática)
         </h2>
@@ -55,11 +64,16 @@ const HowIWork = () => {
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all flex-shrink-0 md:flex-shrink group ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-700 ease-out flex-shrink-0 md:flex-shrink group ${
                     isActive 
                       ? 'bg-primary/10 border border-primary/30' 
                       : 'bg-card border border-border hover:border-primary/20'
+                  } ${
+                    isVisible 
+                      ? 'opacity-100 translate-x-0 translate-y-0' 
+                      : 'opacity-0 -translate-x-4 translate-y-8'
                   }`}
+                  style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
                     isActive 

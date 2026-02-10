@@ -35,9 +35,7 @@ const Hero = () => {
         {/* Main headline */}
         <div className="mb-12 opacity-0 animate-[fade-in_0.8s_ease-out_forwards]" style={{ animationDelay: '100ms' }}>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-4">
-            Formalização da atuação como{' '}
-            <br className="hidden md:block" />
-            <span className="text-primary">Tech Lead de CRO.</span>
+            <span className="text-primary">Tech Lead (CRO)</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl">
             Meu papel vai além do UX/UI e responde por decisões que impactam conversão, receita e sustentação da operação.

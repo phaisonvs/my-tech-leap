@@ -1,9 +1,19 @@
 import mysaLogo from '@/assets/mysa-logo.png';
+import { useInView } from '@/hooks/use-in-view';
 
 const Footer = () => {
+  const { ref, isVisible } = useInView();
+
   return (
     <footer className="py-10 px-6 border-t border-border">
-      <div className="container mx-auto max-w-4xl flex flex-col items-center gap-4">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-4xl flex flex-col items-center gap-4 transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <img 
           src={mysaLogo} 
           alt="MYSA" 

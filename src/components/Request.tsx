@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Target, CheckCircle2, Calendar, ArrowRight, FileText, Users, TrendingUp, MessageSquare } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 
 const formalizations = [
   {
@@ -52,10 +53,18 @@ const paths = [
 const Request = () => {
   const [activePath, setActivePath] = useState(0);
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+  const { ref, isVisible } = useInView();
 
   return (
     <section id="pedido" className="py-24 px-6 bg-secondary/30">
-      <div className="container mx-auto max-w-5xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         {/* Header with styled title */}
         <div className="text-center mb-14">
           <h2 className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-lg md:text-xl font-semibold text-primary mb-6">
@@ -74,7 +83,12 @@ const Request = () => {
           {formalizations.map((item, index) => (
             <div 
               key={index}
-              className="p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all group cursor-default"
+              className={`p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-700 ease-out group cursor-default ${
+                isVisible 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }}
               onMouseEnter={() => setHoveredItem(index)}
               onMouseLeave={() => setHoveredItem(null)}
             >

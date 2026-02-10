@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Code, Database, Eye, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 
 const steps = [
   {
@@ -27,6 +28,7 @@ const steps = [
 const Evolution = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { ref, isVisible } = useInView();
 
   const goToStep = (index: number) => {
     if (isAnimating) return;
@@ -41,7 +43,14 @@ const Evolution = () => {
 
   return (
     <section id="evolucao" className="py-24 px-6">
-      <div className="container mx-auto max-w-4xl">
+      <div 
+        ref={ref as React.RefObject<HTMLDivElement>}
+        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+          isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4">
           Minha evolução natural: começar a pegar mais backend
         </h2>
@@ -58,9 +67,14 @@ const Evolution = () => {
               <button
                 key={index}
                 onClick={() => goToStep(index)}
-                className={`relative z-10 flex flex-col items-center gap-3 transition-all duration-300 ${
+                className={`relative z-10 flex flex-col items-center gap-3 transition-all duration-700 ease-out ${
                   index === activeStep ? 'scale-110' : 'opacity-50 hover:opacity-80'
+                } ${
+                  isVisible 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-8'
                 }`}
+                style={{ transitionDelay: isVisible ? `${index * 150}ms` : '0ms' }}
               >
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   index === activeStep 

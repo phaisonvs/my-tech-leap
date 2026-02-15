@@ -66,21 +66,54 @@ const Hero = () => {
     return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
-  // Remover scroll handler - usar apenas sticky CSS
+  useEffect(() => {
+    if (!isMobile || !cardsRef.current) return;
+
+    const cards = cardsRef.current.querySelectorAll('.stat-card');
+    
+    const handleScroll = () => {
+      const container = cardsRef.current;
+      if (!container) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const containerTop = containerRect.top;
+      const containerHeight = containerRect.height;
+      const viewportHeight = window.innerHeight;
+      
+      cards.forEach((card, index) => {
+        const cardElement = card as HTMLElement;
+        const cardRect = cardElement.getBoundingClientRect();
+        const cardTop = cardRect.top;
+        const cardHeight = cardRect.height;
+        
+        const scrollProgress = Math.max(0, Math.min(1, 
+          (viewportHeight - cardTop) / (viewportHeight * 0.5)
+        ));
+
+        const baseOffset = index * 12;
+        const dynamicOffset = baseOffset * (1 - scrollProgress);
+        const scale = 0.95 + (scrollProgress * 0.05);
+        const opacity = 0.4 + (scrollProgress * 0.6);
+
+        if (cardTop < viewportHeight && cardTop > -cardHeight) {
+          cardElement.style.transform = `translateY(${dynamicOffset}px) scale(${scale})`;
+          cardElement.style.opacity = `${opacity}`;
+          cardElement.style.zIndex = `${10 + index}`;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobile]);
 
   const primaryStats = stats.filter(s => s.primary);
   const secondaryStats = stats.filter(s => !s.primary);
-  const PEEK_OFFSET = 8;
-  const STACK_BASE_TOP = 80 + headerHeight;
 
   return (
-    <section 
-      className="flex flex-col md:justify-center pt-24 md:pb-16 px-6"
-      style={{
-        minHeight: '100vh',
-        paddingBottom: isMobile ? '24px' : '64px',
-      }}
-    >
+    <section className="min-h-screen flex flex-col md:justify-center pt-24 pb-16 px-6">
       <div 
         ref={ref as React.RefObject<HTMLDivElement>}
         className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
@@ -91,7 +124,7 @@ const Hero = () => {
       >
         <div 
           ref={headerRef}
-          className="md:mb-12 opacity-0 animate-[fade-in_0.8s_ease-out_forwards] sticky md:relative top-20 md:top-auto z-50 md:z-auto bg-background/95 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none pb-4 md:pb-0" 
+          className="mb-0 md:mb-12 opacity-0 animate-[fade-in_0.8s_ease-out_forwards] sticky md:relative top-20 md:top-auto z-50 md:z-auto bg-background/95 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none pb-6 md:pb-0" 
           style={{ animationDelay: '100ms' }}
         >
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-4">
@@ -106,7 +139,10 @@ const Hero = () => {
 
         <div 
           ref={cardsRef} 
-          className="md:mb-8"
+          className="mb-8"
+          style={{
+            marginTop: isMobile ? `${headerHeight + 24}px` : '0',
+          }}
         >
           <div className="hidden md:grid md:grid-cols-3 gap-4 mb-4">
             {primaryStats.map((stat, index) => (
@@ -148,32 +184,27 @@ const Hero = () => {
             ))}
           </div>
 
-          <div className="md:hidden flex flex-col gap-4 mt-4">
-            {stats.map((stat, index) => {
-              const cardStickyTop = STACK_BASE_TOP + index * PEEK_OFFSET;
-              
-              return (
-                <div
-                  key={index}
-                  className="stat-card group p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300"
-                  style={{
-                    position: 'sticky',
-                    top: `${cardStickyTop}px`,
-                    zIndex: 10 + index,
-                  }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all">
-                      <stat.icon className="w-4 h-4 text-primary transition-transform group-hover:scale-125" />
-                    </div>
-                    <span className="text-xs text-muted-foreground">{stat.title}</span>
+          <div className="md:hidden flex flex-col gap-6">
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                className="stat-card group p-5 rounded-xl bg-card border border-border hover:border-primary/30 transition-all duration-300 will-change-transform"
+                style={{
+                  position: 'sticky',
+                  top: `${80 + headerHeight + 24 + index * 12}px`,
+                }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                    <stat.icon className="w-4 h-4 text-primary transition-transform group-hover:scale-125" />
                   </div>
-                  <div className="text-lg font-semibold text-foreground">
-                    {stat.value}
-                  </div>
+                  <span className="text-xs text-muted-foreground">{stat.title}</span>
                 </div>
-              );
-            })}
+                <div className="text-lg font-semibold text-foreground">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

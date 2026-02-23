@@ -549,7 +549,8 @@ const Hero = () => {
                   const absOffset = Math.abs(offset);
                   const thetaDeg = -offset * angleStep;
                   const isActive = absOffset < 0.25;
-                  const opacity = Math.max(0, 1 - absOffset * 0.62);
+                  const baseOpacity = Math.max(0, 1 - absOffset * 0.62);
+                  const opacity = isActive ? baseOpacity : baseOpacity * 0.88;
 
                   if (absOffset > N / 2 + 0.1) return null;
 

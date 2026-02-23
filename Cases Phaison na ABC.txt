@@ -1,0 +1,39 @@
+1 - Novo Front geral da ABC 2021
+2 - Local Page 2021
+3- LP Black Friday (Meta batida)
+4 - LP Liquida ABC
+5 - Forms BlackFriday
+6 - LP Visita a Obra
+7 - Página de Cupons
+8 - Página de Encarte
+9 - Migração de LPs
+10 - LPs Club Day
+11 - Checkout Headless
+12 - Novo Menu
+13 - Multi Frete
+14 - Regionalização
+15 - Loja Duratex
+14 - Diretorio de Lojas
+15 - PDP Pisos
+16 - ABC Prime
+17 - LP de Cadastro
+18 - LP Seja um franqueado
+19 - LP Materiais Hidráulicos
+20 - Frete Gratis para JF
+21 - Usuários estão visualizando
+22 - Emails Transacionais
+23 - Diretório de arquitetos
+24 - Design System
+25 - Página Livelo + Estratégia para manter o usuário na pagina
+26 - Pesquisa ABC
+27 - Pop-up Primeira Compra
+28 - LP Semana do Consumidor (Meta batida)
+29 - Semana do Cliente
+30 RA3D
+31 LP Loja Parceira
+32 - Story in Sotyr
+33 - Catálogo Rápido
+34 - Retirar na Loja
+35 - LP Black days
+36 - Múltiplas opções de produtos
+37 - 

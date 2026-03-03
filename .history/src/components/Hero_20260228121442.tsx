@@ -508,7 +508,7 @@ const Hero = () => {
         </div>
 
         <div className="relative w-full flex justify-center">
-          <div className="mt-2 select-none overflow-visible w-full md:max-w-[70%] relative">
+          <div className="mt-2 select-none overflow-visible w-full max-w-[100%] md:max-w-[70%] relative">
             <div
               ref={containerRef}
               className="relative z-0"
@@ -574,7 +574,6 @@ const Hero = () => {
                         inset: 0,
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
                         transform: `rotateX(${thetaDeg}deg) translateZ(${drumRadius}px)`,
                         opacity,
                         zIndex: Math.round(2 - absOffset),
@@ -587,7 +586,7 @@ const Hero = () => {
                       }}
                     >
                       <div
-                        className={`w-full max-w-[108%] md:max-w-full -m-4 p-4 ${index !== 0 ? 'cursor-pointer' : ''}`}
+                        className={`w-full -m-4 p-4 ${index !== 0 ? 'cursor-pointer' : ''}`}
                         onMouseDown={index !== 0 ? (e) => handleCardMouseDown(e, index) : undefined}
                         onMouseUp={index !== 0 ? (e) => handleCardMouseUp(e, index) : undefined}
                         onTouchStart={index !== 0 ? (e) => handleCardTouchStart(e, index) : undefined}
@@ -686,7 +685,13 @@ const Hero = () => {
               />
             </div>
 
-            <div className="relative z-10 flex justify-center gap-1.5 mt-14 md:mt-16 md:gap-2">
+            <div
+              className="absolute z-10 flex flex-col gap-1.5 md:gap-2 right-full mr-3 md:mr-4"
+              style={{
+                top: drumHeight / 2,
+                transform: 'translateY(-50%)',
+              }}
+            >
               {stats.map((_, i) => {
                 const isActive = activeIndex === i;
                 return (
@@ -696,8 +701,8 @@ const Hero = () => {
                     aria-label={`Card ${i + 1}`}
                     className="rounded-full border-0 cursor-pointer transition-all duration-300 shrink-0"
                     style={{
-                      width: isMobile ? (isActive ? 14 : 4) : (isActive ? 18 : 6),
-                      height: isMobile ? 4 : 6,
+                      width: isMobile ? 4 : 6,
+                      height: isMobile ? (isActive ? 14 : 4) : (isActive ? 18 : 6),
                       borderRadius: 4,
                       backgroundColor: isActive
                         ? 'hsl(var(--primary))'
@@ -708,7 +713,7 @@ const Hero = () => {
                 );
               })}
             </div>
-            <div className="relative z-10 flex justify-center mt-8 md:mt-10 pb-1">
+            <div className="relative z-10 flex justify-center mt-24 md:mt-28 pb-1">
               <button
                 onClick={() => document.getElementById('tldr')?.scrollIntoView({ behavior: 'smooth' })}
                 aria-label="Ir para próxima seção"

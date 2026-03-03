@@ -508,7 +508,7 @@ const Hero = () => {
         </div>
 
         <div className="relative w-full flex justify-center">
-          <div className="mt-2 select-none overflow-visible w-full md:max-w-[70%] relative">
+          <div className="mt-2 select-none overflow-visible w-full max-w-[100%] md:max-w-[70%] relative">
             <div
               ref={containerRef}
               className="relative z-0"
@@ -574,7 +574,6 @@ const Hero = () => {
                         inset: 0,
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
                         transform: `rotateX(${thetaDeg}deg) translateZ(${drumRadius}px)`,
                         opacity,
                         zIndex: Math.round(2 - absOffset),
@@ -587,7 +586,7 @@ const Hero = () => {
                       }}
                     >
                       <div
-                        className={`w-full max-w-[108%] md:max-w-full -m-4 p-4 ${index !== 0 ? 'cursor-pointer' : ''}`}
+                        className={`w-full -m-4 p-4 ${index !== 0 ? 'cursor-pointer' : ''}`}
                         onMouseDown={index !== 0 ? (e) => handleCardMouseDown(e, index) : undefined}
                         onMouseUp={index !== 0 ? (e) => handleCardMouseUp(e, index) : undefined}
                         onTouchStart={index !== 0 ? (e) => handleCardTouchStart(e, index) : undefined}

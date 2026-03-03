@@ -44,80 +44,143 @@ const cases: CaseItem[] = [
   },
   {
     id: 2,
-    title: 'Falhas na integração de pedidos',
-    tags: ['Sustentação', 'API'],
-    impact: 'Menos pedidos travados / menos ajuste manual · [X]',
-    print: '[PRINT_2]',
-    problem: '[PROBLEMA_2]',
-    actions: ['[ACAO_2_1]', '[ACAO_2_2]', '[ACAO_2_3]'],
-    result: '[RESULTADO_2]',
+    title: 'Black Friday ABC',
+    tags: ['CRO', 'Front-end', 'Campanha'],
+    impact: 'Landing e fluxo de conversão para campanha Black Friday com foco em clareza e performance.',
+    print: '/cases/2-black-friday-abc.jpg',
+    problem: 'A campanha Black Friday exigia uma experiência dedicada, com mensagem clara, CTAs visíveis e integração com estoque/preço para evitar fricção no pico de demanda.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Desenhei e implementei a landing da Black Friday com hierarquia visual e CTAs alinhados ao funil.',
+      'Garanti responsividade e carregamento otimizado para tráfego de pico.',
+      'Integrei com regras de estoque e exibição de ofertas para consistência da jornada.',
+    ],
+    result: 'Campanha publicada em tempo hábil com experiência estável e conversão alinhada aos objetivos da data.',
     evidence: '[LINK_2]',
+    year: 2022,
   },
   {
     id: 3,
-    title: 'Evolução de jornada em etapa crítica',
-    tags: ['UX/UI', 'Front-end'],
-    impact: 'Menos atrito em etapa chave · [X%]',
-    print: '[PRINT_3]',
-    problem: '[PROBLEMA_3]',
-    actions: ['[ACAO_3_1]', '[ACAO_3_2]', '[ACAO_3_3]'],
-    result: '[RESULTADO_3]',
+    title: 'Visita à obra',
+    tags: ['UX/UI', 'Jornada'],
+    impact: 'Jornada de agendamento e experiência de visita à obra com foco em conversão e clareza.',
+    print: '/cases/3-visita-a-obra.jpg',
+    problem: 'Era necessário oferecer uma jornada clara de agendamento de visita à obra, reduzindo atrito e aumentando o preenchimento de formulários e conversão.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Desenhei e implementei o fluxo de visita à obra com formulário e confirmação claros.',
+      'Ajustei copy e hierarquia visual para reduzir abandono em etapas críticas.',
+      'Mantive consistência com o restante do site e padrões de acessibilidade.',
+    ],
+    result: 'Jornada de visita à obra publicada e estável, com melhor adesão e rastreio de conversão.',
     evidence: '[LINK_3]',
+    year: 2022,
   },
   {
     id: 4,
-    title: 'Tracking e validação de eventos',
-    tags: ['Dados', 'CRO'],
-    impact: 'Métricas confiáveis pra decisão · [X eventos]',
-    print: '[PRINT_4]',
-    problem: '[PROBLEMA_4]',
-    actions: ['[ACAO_4_1]', '[ACAO_4_2]', '[ACAO_4_3]'],
-    result: '[RESULTADO_4]',
+    title: 'Página de cupons',
+    tags: ['UX/UI', 'Front-end', 'CRO'],
+    impact: 'Página de cupons com destaque de ofertas e CTAs para aumento de uso e conversão.',
+    print: '/cases/4-pagina-de-cupons.jpg',
+    problem: 'A página de cupons precisava ser mais clara e acionável, com ofertas em destaque e caminho óbvio para uso no checkout.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Reestruturei a página de cupons com layout focado em descoberta e uso do cupom.',
+      'Implementei componentes reutilizáveis e estados de copy válido/expirado.',
+      'Alinhei exibição com regras de elegibilidade e integração ao fluxo de compra.',
+    ],
+    result: 'Página de cupons mais clara e utilizável, com melhor percepção de valor e uso no funil.',
     evidence: '[LINK_4]',
+    year: 2022,
   },
   {
     id: 5,
-    title: 'Performance / percepção de velocidade',
-    tags: ['Front-end', 'Qualidade'],
-    impact: 'Menos abandono por lentidão · [X%]',
-    print: '[PRINT_5]',
-    problem: '[PROBLEMA_5]',
-    actions: ['[ACAO_5_1]', '[ACAO_5_2]', '[ACAO_5_3]'],
-    result: '[RESULTADO_5]',
+    title: 'Página de cupons (evolução)',
+    tags: ['UX/UI', 'Front-end'],
+    impact: 'Evolução da experiência de cupons com foco em clareza e conversão.',
+    print: '/cases/5-pagina-de-cupons.jpg',
+    problem: 'Evolução contínua da página de cupons para melhorar descoberta, legibilidade e taxa de aplicação no checkout.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Ajustes de layout e hierarquia visual na listagem de cupons.',
+      'Refinamento de estados (válido, expirado, já utilizado) e feedback ao usuário.',
+      'Alinhamento com métricas de uso de cupom e impacto em conversão.',
+    ],
+    result: 'Experiência de cupons evoluída com menor fricção e melhor adesão às ofertas.',
     evidence: '[LINK_5]',
+    year: 2022,
   },
   {
     id: 6,
-    title: 'Frete / logística e regras de entrega',
-    tags: ['Integração', 'Operação'],
-    impact: 'Regras de frete mais estáveis · [X]',
-    print: '[PRINT_6]',
-    problem: '[PROBLEMA_6]',
-    actions: ['[ACAO_6_1]', '[ACAO_6_2]', '[ACAO_6_3]'],
-    result: '[RESULTADO_6]',
+    title: 'Login Users Prime',
+    tags: ['UX/UI', 'Front-end', 'Autenticação'],
+    impact: 'Fluxo de login e experiência para usuários Prime com redução de atrito e clareza.',
+    print: '/cases/6-login-users-prime.jpg',
+    problem: 'O fluxo de login para usuários Prime precisava ser claro, seguro e alinhado ao restante da jornada para evitar abandono em etapa crítica.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Desenhei e implementei o fluxo de login dedicado aos usuários Prime.',
+      'Garanti responsividade, mensagens de erro claras e integração com autenticação.',
+      'Mantive consistência visual e de copy com o programa e o site.',
+    ],
+    result: 'Login Prime estável e compreensível, com menor atrito e melhor rastreio de conversão.',
     evidence: '[LINK_6]',
+    year: 2022,
   },
   {
     id: 7,
-    title: 'Padronização de componentes',
-    tags: ['UI', 'Escala'],
-    impact: 'Mais consistência e menos retrabalho · [X]',
-    print: '[PRINT_7]',
-    problem: '[PROBLEMA_7]',
-    actions: ['[ACAO_7_1]', '[ACAO_7_2]', '[ACAO_7_3]'],
-    result: '[RESULTADO_7]',
+    title: 'Checkout ABC',
+    tags: ['CRO', 'Front-end', 'Checkout'],
+    impact: 'Checkout ABC com foco em clareza, redução de atrito e conversão na etapa final.',
+    print: '/cases/7-checkout-abc.jpg',
+    problem: 'O checkout precisava de revisão de UX e consistência técnica para reduzir abandono e falhas na etapa final do funil.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Revisei e implementei melhorias no fluxo de checkout (revisão de pedido, frete, pagamento).',
+      'Padronizei componentes e mensagens de erro para reduzir confusão.',
+      'Garanti integração estável com frete e pagamento e acompanhamento de eventos de conversão.',
+    ],
+    result: 'Checkout mais claro e estável, com menor abandono e métricas de conversão mensuráveis.',
     evidence: '[LINK_7]',
+    evidences: [
+      { label: 'Checkout ABC', href: '#' },
+      { label: 'Checkout ABC Prime', href: '#' },
+    ],
+    year: 2022,
   },
   {
     id: 8,
-    title: 'Bug crítico com time externo',
-    tags: ['Coordenação', 'Entrega'],
-    impact: 'Resolução mais rápida e rastreável · [Z dias]',
-    print: '[PRINT_8]',
-    problem: '[PROBLEMA_8]',
-    actions: ['[ACAO_8_1]', '[ACAO_8_2]', '[ACAO_8_3]'],
-    result: '[RESULTADO_8]',
+    title: 'Checkout ABC Prime',
+    tags: ['CRO', 'Front-end', 'Checkout'],
+    impact: 'Versão do checkout para usuários Prime com benefícios visíveis e fluxo dedicado.',
+    print: '/cases/7-checkout-abcprime.jpg',
+    problem: 'Usuários Prime precisavam de uma experiência de checkout que destacasse benefícios (frete, ofertas) sem quebrar o fluxo padrão.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Implementei a variante de checkout para usuários Prime com exibição de benefícios.',
+      'Mantive reuso de componentes do checkout principal e regras específicas para Prime.',
+      'Garanti rastreio de conversão separado para análise de performance do programa.',
+    ],
+    result: 'Checkout Prime publicado com experiência diferenciada e conversão monitorada.',
     evidence: '[LINK_8]',
+    year: 2022,
+  },
+  {
+    id: 9,
+    title: 'Header e menu',
+    tags: ['UX/UI', 'Front-end', 'Navegação'],
+    impact: 'Header e menu padronizados para melhor navegação e descoberta no site.',
+    print: '/cases/7-header-menu.jpg',
+    problem: 'O header e o menu precisavam ser consistentes, acessíveis e alinhados às jornadas de conversão em todas as páginas.',
+    problemLabel: 'Contexto / Dor',
+    actions: [
+      'Desenhei e implementei o header e o menu com estrutura reutilizável e responsiva.',
+      'Organizei a navegação por prioridade e alinhei com SEO e rotas do diretório.',
+      'Mantive estados de hover/foco e acessibilidade para teclado e leitores de tela.',
+    ],
+    result: 'Header e menu estáveis em todo o site, com melhor orientação e menor fricção na navegação.',
+    evidence: '[LINK_9]',
+    year: 2022,
   },
 ];
 
@@ -216,7 +279,13 @@ const Cases = () => {
       <div 
         className="cases-carousel-mask relative overflow-visible" 
         onMouseEnter={() => setIsPaused(true)} 
-        onMouseLeave={() => setIsPaused(false)}
+        onMouseLeave={() => {
+          setIsPaused(false);
+          if (api) {
+            if (api.canScrollPrev()) api.scrollPrev();
+            else api.scrollTo(cases.length - 1);
+          }
+        }}
       >
         <Carousel
           setApi={setApi}
@@ -252,7 +321,7 @@ const Cases = () => {
                       <img
                         src={caseItem.print}
                         alt=""
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
                       />
                     ) : (
                       <span className="text-xs text-muted-foreground">{caseItem.print}</span>
@@ -277,7 +346,7 @@ const Cases = () => {
                   </h3>
                   
                   {/* Impact */}
-                  <p className="text-xs text-muted-foreground mt-auto leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed">
                     {caseItem.impact}
                   </p>
                 </button>

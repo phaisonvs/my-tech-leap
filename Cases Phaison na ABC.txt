@@ -13,7 +13,7 @@
 13 - Multi Frete
 14 - Regionalização
 15 - Loja Duratex
-14 - Diretorio de Lojas
+14 - Diretório de Lojas
 15 - PDP Pisos
 16 - ABC Prime
 17 - LP de Cadastro
@@ -36,4 +36,6 @@
 34 - Retirar na Loja
 35 - LP Black days
 36 - Múltiplas opções de produtos
-37 - 
+37 - LP Amigo Pé Qquente
+setup loja abc prime
+

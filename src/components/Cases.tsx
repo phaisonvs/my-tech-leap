@@ -20,10 +20,34 @@ interface CaseItem {
   year?: number;
 }
 
+const createGenericCase = (
+  id: number,
+  title: string,
+  print: string,
+  tags: string[]
+): CaseItem => ({
+  id,
+  title,
+  tags,
+  impact: `${title} com foco em experiência, execução técnica e conversão.`,
+  print,
+  problem:
+    `A frente "${title}" exigia evolução de jornada e execução de front-end para reduzir atrito e sustentar crescimento do funil.`,
+  problemLabel: 'Contexto / Dor',
+  actions: [
+    `Mapeei o escopo de "${title}" e defini a solução com foco em clareza e consistência da jornada.`,
+    'Implementei interface e regras técnicas necessárias para publicação com estabilidade.',
+    'Validei comportamento responsivo, acompanhamento de métricas e alinhamento com a operação.',
+  ],
+  result: `${title} publicado com jornada mais clara e base pronta para evolução contínua.`,
+  evidence: `[LINK_${id}]`,
+  year: 2023,
+});
+
 const cases: CaseItem[] = [
   {
     id: 1,
-    title: 'Diretório de Lojas:\nCluster Local (Estado > Cidade > Loja)',
+    title: 'Localpage',
     tags: ['UX/UI', 'Front-end', 'SEO'],
     impact: 'UI/UX + front: componentes reutilizáveis, layout responsivo e roteamento hierárquico (estado→cidade→loja) para escalar o diretório',
     print: '/cases/1-localpage.jpg',
@@ -95,10 +119,10 @@ const cases: CaseItem[] = [
   },
   {
     id: 5,
-    title: 'Página de cupons (evolução)',
+    title: 'Página de encarte lead',
     tags: ['UX/UI', 'Front-end'],
     impact: 'Evolução da experiência de cupons com foco em clareza e conversão.',
-    print: '/cases/5-pagina-de-cupons.jpg',
+    print: '/cases/5-pagina-de-encarte-lead.jpg',
     problem: 'Evolução contínua da página de cupons para melhorar descoberta, legibilidade e taxa de aplicação no checkout.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -129,10 +153,10 @@ const cases: CaseItem[] = [
   },
   {
     id: 7,
-    title: 'Checkout ABC',
+    title: 'Checkout ABC da Construção',
     tags: ['CRO', 'Front-end', 'Checkout'],
     impact: 'Checkout ABC com foco em clareza, redução de atrito e conversão na etapa final.',
-    print: '/cases/7-checkout-abc.jpg',
+    print: '/cases/7-checkout-abc-da-construcao.jpg',
     problem: 'O checkout precisava de revisão de UX e consistência técnica para reduzir abandono e falhas na etapa final do funil.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -143,7 +167,7 @@ const cases: CaseItem[] = [
     result: 'Checkout mais claro e estável, com menor abandono e métricas de conversão mensuráveis.',
     evidence: '[LINK_7]',
     evidences: [
-      { label: 'Checkout ABC', href: '#' },
+      { label: 'Checkout ABC da Construção', href: '#' },
       { label: 'Checkout ABC Prime', href: '#' },
     ],
     year: 2022,
@@ -153,7 +177,7 @@ const cases: CaseItem[] = [
     title: 'Checkout ABC Prime',
     tags: ['CRO', 'Front-end', 'Checkout'],
     impact: 'Versão do checkout para usuários Prime com benefícios visíveis e fluxo dedicado.',
-    print: '/cases/7-checkout-abcprime.jpg',
+    print: '/cases/8-checkout-abcprime.jpg',
     problem: 'Usuários Prime precisavam de uma experiência de checkout que destacasse benefícios (frete, ofertas) sem quebrar o fluxo padrão.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -167,10 +191,10 @@ const cases: CaseItem[] = [
   },
   {
     id: 9,
-    title: 'Header e menu',
+    title: 'Header menu ABC da Construção',
     tags: ['UX/UI', 'Front-end', 'Navegação'],
     impact: 'Header e menu padronizados para melhor navegação e descoberta no site.',
-    print: '/cases/7-header-menu.jpg',
+    print: '/cases/9-header-menu-abc-da-construcao.jpg',
     problem: 'O header e o menu precisavam ser consistentes, acessíveis e alinhados às jornadas de conversão em todas as páginas.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -182,16 +206,146 @@ const cases: CaseItem[] = [
     evidence: '[LINK_9]',
     year: 2022,
   },
+  createGenericCase(
+    10,
+    'Novo Front E-com ABC',
+    '/cases/10-novo-front-e-com-abc.jpg',
+    ['Front-end', 'UX/UI', 'Plataforma']
+  ),
+  createGenericCase(
+    11,
+    'Página Login Ecom ABC',
+    '/cases/11-pagina-login-ecom-abc.jpg',
+    ['UX/UI', 'Front-end', 'Autenticação']
+  ),
+  createGenericCase(
+    12,
+    'LP Amigo Pé Quente',
+    '/cases/12-lp-amigo-pe-quente.jpg',
+    ['CRO', 'Front-end', 'LP']
+  ),
+  createGenericCase(
+    13,
+    'LP Liquida ABC',
+    '/cases/12-lpliquidaabc.jpg',
+    ['CRO', 'Front-end', 'LP']
+  ),
+  createGenericCase(
+    14,
+    'Migração LPs',
+    '/cases/12-migração-lps.jpg',
+    ['CRO', 'Front-end', 'Migração']
+  ),
+  createGenericCase(
+    15,
+    'PDP Pisos e Revestimentos',
+    '/cases/12-pdp-pisos-e-revestimentos.jpg',
+    ['CRO', 'UX/UI', 'PDP']
+  ),
+  createGenericCase(
+    16,
+    'Regionalização de Preços',
+    '/cases/13-regionalizacao-de-preços.jpg',
+    ['CRO', 'Pricing', 'Front-end']
+  ),
+  createGenericCase(
+    17,
+    'Integração Loja Duratex',
+    '/cases/14-Integracao-loja-duratex.jpg',
+    ['Integração', 'Front-end', 'Operação']
+  ),
+  createGenericCase(
+    18,
+    'Integração Loja Duratex (Fase 2)',
+    '/cases/15-Integracao-loja-duratex.jpg',
+    ['Integração', 'Front-end', 'Operação']
+  ),
+  createGenericCase(
+    19,
+    'Casa Dexco',
+    '/cases/16-casa-dexco.jpg',
+    ['UX/UI', 'Front-end', 'Marca']
+  ),
+  createGenericCase(
+    20,
+    'PDP Loja Duratex',
+    '/cases/18-pdp-loja-duratex.jpg',
+    ['CRO', 'UX/UI', 'PDP']
+  ),
+  createGenericCase(
+    21,
+    'PDP Loja Duratex (Fase 2)',
+    '/cases/19-pdp-loja-duratex.jpg',
+    ['CRO', 'UX/UI', 'PDP']
+  ),
+  createGenericCase(
+    22,
+    'Setup Nova Loja ABC Prime',
+    '/cases/17-setup-nova-loja-abc-prime.jpg',
+    ['UX/UI', 'Front-end', 'Setup']
+  ),
+  createGenericCase(
+    23,
+    'LP Chance Única',
+    '/cases/20-lp-chance-única.jpg',
+    ['CRO', 'Front-end', 'LP']
+  ),
+  createGenericCase(
+    24,
+    'Tracking Leads Expansão',
+    '/cases/21-tracking-leads-expansao.jpeg',
+    ['Analytics', 'Tracking', 'Leads']
+  ),
+  createGenericCase(
+    25,
+    'LP Semana do Consumidor',
+    '/cases/25-lp-semana-do-consumidor.jpg',
+    ['CRO', 'Front-end', 'Campanha']
+  ),
+  createGenericCase(
+    26,
+    'Design System ABC',
+    '/cases/22-design-system-abc.jpg',
+    ['Design System', 'UX/UI', 'Front-end']
+  ),
+  createGenericCase(
+    27,
+    'Programa de Indicação Franqueado',
+    '/cases/22-programa-de-indicacao-franqueado.jpg',
+    ['UX/UI', 'Front-end', 'Programa']
+  ),
+  createGenericCase(
+    28,
+    'E-mails Transacionais',
+    '/cases/23-e-mails-transacionais.jpg',
+    ['E-mail', 'Transacional', 'Comunicação']
+  ),
+  createGenericCase(
+    29,
+    'LP ABC Prime',
+    '/cases/23-lp-abc-primeo.jpg',
+    ['CRO', 'Front-end', 'LP']
+  ),
 ];
+
+const getCaseOrderFromPrint = (print: string) => {
+  const match = print.match(/\/cases\/(\d+)-/);
+  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
+};
+
+const orderedCases = [...cases].sort((a, b) => {
+  const orderDiff = getCaseOrderFromPrint(a.print) - getCaseOrderFromPrint(b.print);
+  if (orderDiff !== 0) return orderDiff;
+  return a.print.localeCompare(b.print, 'pt-BR', { sensitivity: 'base' });
+});
 
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   const autoplayPlugin = useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({ delay: 1800, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   useEffect(() => {
@@ -205,28 +359,6 @@ const Cases = () => {
       api.off('select', onSelect);
     };
   }, [api]);
-
-  useEffect(() => {
-    if (!api) return;
-  
-    const scrollToPrev = () => {
-      if (isPaused) return;
-      
-      if (api.canScrollPrev()) {
-        api.scrollPrev();
-      } else {
-        api.scrollTo(cases.length - 1);
-      }
-    };
-  
-    const intervalId = window.setInterval(scrollToPrev, 1500);
-  
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [api, isPaused]);
 
   const { ref, isVisible } = useInView();
 
@@ -254,19 +386,19 @@ const Cases = () => {
           <div className="hidden md:flex items-center gap-2">
           <button 
   onClick={() => {
-    setIsPaused(true);
     api?.scrollPrev();
+    autoplayPlugin.current.reset();
   }}
   className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
 >
               <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
             <span className="text-xs text-muted-foreground px-2">
-              {current + 1} / {cases.length}
+              {current + 1} / {orderedCases.length}
             </span>
             <button onClick={() => {
-    setIsPaused(true);
     api?.scrollNext();
+    autoplayPlugin.current.reset();
   }}
   className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
 >
@@ -276,19 +408,10 @@ const Cases = () => {
         </div>
       </div>
 
-      <div 
-        className="cases-carousel-mask relative overflow-visible" 
-        onMouseEnter={() => setIsPaused(true)} 
-        onMouseLeave={() => {
-          setIsPaused(false);
-          if (api) {
-            if (api.canScrollPrev()) api.scrollPrev();
-            else api.scrollTo(cases.length - 1);
-          }
-        }}
-      >
+      <div className="cases-carousel-mask relative overflow-visible">
         <Carousel
           setApi={setApi}
+          plugins={[autoplayPlugin.current]}
           opts={{
             align: 'center',
             loop: true,
@@ -296,7 +419,7 @@ const Cases = () => {
           className="w-full"
         >
           <CarouselContent className="-ml-4 md:-ml-4">
-            {cases.map((caseItem) => (
+            {orderedCases.map((caseItem) => (
               <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]">
                 <button
                   onClick={() => setSelectedCase(caseItem)}
@@ -358,7 +481,7 @@ const Cases = () => {
 
       <div className="mt-4 flex justify-center">
         <div className="flex gap-1">
-          {cases.map((_, i) => (
+          {orderedCases.map((_, i) => (
             <button
               key={i}
               onClick={() => api?.scrollTo(i)}

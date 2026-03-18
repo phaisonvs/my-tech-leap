@@ -500,7 +500,7 @@ const Hero = () => {
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-3 md:mb-4 break-words">
             Formalização da atuação{'\u00A0'}como
             <br />
-            <span className="text-primary">Tech Lead de Conversão e Experiência (CRO)</span>
+            <span className="text-primary">Tech Lead de CRO</span>
           </h1>
           <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words">
             Hoje eu respondo pela execução e evolução da camada técnica de CRO: UX/UI + front-end + integrações + tracking + sustentação da operação, com evolução dos KPIs do funil.

@@ -6,7 +6,7 @@ const formalizations = [
   {
     icon: FileText,
     title: 'Título oficial',
-    text: 'Tech Lead (Interface + Conversão)',
+    text: 'Tech Lead de CRO',
   },
   {
     icon: Target,
@@ -32,7 +32,7 @@ const paths = [
     title: 'Decidir e formalizar agora',
     description: 'A gente define título, escopo e senioridade hoje. Nos próximos 30 dias a gente ajusta qualquer detalhe que surgir.',
     bullets: [
-      'Título oficial: Tech Lead (Interface + Conversão).',
+      'Título oficial: Tech Lead de CRO.',
       'Escopo documentado.',
       'Alinhamento de expectativa de nível.',
     ],

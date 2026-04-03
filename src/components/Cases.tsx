@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ExternalLink, ChevronLeft, ChevronRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useInView } from '@/hooks/use-in-view';
+import { shuffleArray, uniqueCases } from '@/components/cases-utils';
 
 interface CaseItem {
   id: number;
@@ -11,6 +12,7 @@ interface CaseItem {
   tags: string[];
   impact: string;
   print: string;
+  imagePosition?: 'top' | 'center' | 'bottom';
   problem: string;
   problemLabel?: string;
   actions: string[];
@@ -24,13 +26,15 @@ const createGenericCase = (
   id: number,
   title: string,
   print: string,
-  tags: string[]
+  tags: string[],
+  imagePosition: 'top' | 'center' | 'bottom' = 'top'
 ): CaseItem => ({
   id,
   title,
   tags,
   impact: `${title} com foco em experiência, execução técnica e conversão.`,
   print,
+  imagePosition,
   problem:
     `A frente "${title}" exigia evolução de jornada e execução de front-end para reduzir atrito e sustentar crescimento do funil.`,
   problemLabel: 'Contexto / Dor',
@@ -239,7 +243,7 @@ const cases: CaseItem[] = [
   createGenericCase(
     15,
     'PDP Pisos e Revestimentos',
-    '/cases/12-pdp-pisos-e-revestimentos.jpg',
+    '/cases/12-pdp-pisos-e-revestimentos.png',
     ['CRO', 'UX/UI', 'PDP']
   ),
   createGenericCase(
@@ -311,41 +315,136 @@ const cases: CaseItem[] = [
   createGenericCase(
     27,
     'Programa de Indicação Franqueado',
-    '/cases/22-programa-de-indicacao-franqueado.jpg',
+    '/cases/23-programa-de-indicacao-franqueado.jpg',
     ['UX/UI', 'Front-end', 'Programa']
   ),
   createGenericCase(
     28,
     'E-mails Transacionais',
-    '/cases/23-e-mails-transacionais.jpg',
+    '/cases/24-e-mails-transacionais.jpg',
     ['E-mail', 'Transacional', 'Comunicação']
   ),
   createGenericCase(
     29,
     'LP ABC Prime',
-    '/cases/23-lp-abc-primeo.jpg',
+    '/cases/24-lp-abc-primeo.jpg',
     ['CRO', 'Front-end', 'LP']
+  ),
+  createGenericCase(
+    30,
+    'Página de produto - pisos e revestimentos',
+    '/cases/26-pagina-de-produto-pisos-e-revestimentos.jpg',
+    ['UX/UI', 'Front-end', 'PDP']
+  ),
+  createGenericCase(
+    31,
+    'Página de produtos - variante metais',
+    '/cases/27-pagina-de-produtos variante metais.jpg',
+    ['UX/UI', 'Front-end', 'PDP']
+  ),
+  createGenericCase(
+    32,
+    'PDP piso e revestimentos - desktop',
+    '/cases/28-pdp-piso- e revestimentosdesk.jpg',
+    ['UX/UI', 'Front-end', 'PDP']
+  ),
+  createGenericCase(
+    33,
+    'Popup especialista piso - desktop',
+    '/cases/29-popup-especialista-piso-desk.jpg',
+    ['UX/UI', 'Front-end', 'CRO']
+  ),
+  createGenericCase(
+    34,
+    'Looker performance - LP expansão',
+    '/cases/30-looker-performance-lp-expansao.jpg',
+    ['Analytics', 'Front-end', 'Performance']
+  ),
+  createGenericCase(
+    35,
+    'Primeira compra popup',
+    '/cases/31primeira-compra-opup.jpg',
+    ['CRO', 'Front-end', 'Popup']
+  ),
+  createGenericCase(
+    36,
+    'Formulário Bot WhatsApp',
+    '/cases/32-formulario-bot Whatsapp.jpg',
+    ['UX/UI', 'Front-end', 'WhatsApp'],
+    'center'
+  ),
+  createGenericCase(
+    37,
+    'Autocomplete performance de busca',
+    '/cases/33-Auto-complete-perfoamance-busca.jpg',
+    ['Front-end', 'UX/UI', 'Busca']
+  ),
+  createGenericCase(
+    38,
+    'Retira na Guide Shop - cotação de frete',
+    '/cases/34-Retira na Guide Shop - cotacao de frete.jpg',
+    ['CRO', 'Front-end', 'Frete'],
+    'center'
+  ),
+  createGenericCase(
+    39,
+    'LP Super Chance Única',
+    '/cases/35-LP-SuperChnce Unica.png',
+    ['CRO', 'Front-end', 'Campanha']
+  ),
+  createGenericCase(
+    40,
+    'LP Mês do Consumidor',
+    '/cases/36-LP-Mes do consumidor.png',
+    ['CRO', 'Front-end', 'Campanha']
+  ),
+  createGenericCase(
+    41,
+    'Material adicional',
+    '/cases/5c0b20dfc3a6d5cd113cf55d3ab6cbf463897ef3.png',
+    ['Front-end', 'UI']
   ),
 ];
 
-const getCaseOrderFromPrint = (print: string) => {
-  const match = print.match(/\/cases\/(\d+)-/);
-  return match ? Number(match[1]) : Number.MAX_SAFE_INTEGER;
-};
-
-const orderedCases = [...cases].sort((a, b) => {
-  const orderDiff = getCaseOrderFromPrint(a.print) - getCaseOrderFromPrint(b.print);
-  if (orderDiff !== 0) return orderDiff;
-  return a.print.localeCompare(b.print, 'pt-BR', { sensitivity: 'base' });
-});
+const dedupedCases = uniqueCases(cases);
+const shuffledCases = shuffleArray(dedupedCases);
 
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+  const [isCasesHovered, setIsCasesHovered] = useState(false);
+  const dragGestureRef = useRef<{
+    startX: number;
+    startY: number;
+  } | null>(null);
 
   const autoplayPlugin = useRef(
-    Autoplay({ delay: 1800, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({
+      delay: 1800,
+      playOnInit: false,
+      stopOnInteraction: true,
+      stopOnMouseEnter: false,
+      stopOnFocusIn: false,
+    })
+  );
+
+  const syncAutoplay = useCallback(
+    (shouldPlay: boolean) => {
+      if (!api) return;
+
+      if (shouldPlay) {
+        if (!autoplayPlugin.current.isPlaying()) {
+          autoplayPlugin.current.play();
+        }
+        return;
+      }
+
+      if (autoplayPlugin.current.isPlaying()) {
+        autoplayPlugin.current.stop();
+      }
+    },
+    [api]
   );
 
   useEffect(() => {
@@ -361,6 +460,55 @@ const Cases = () => {
   }, [api]);
 
   const { ref, isVisible } = useInView();
+
+  useEffect(() => {
+    syncAutoplay(isVisible && !isCasesHovered);
+  }, [isCasesHovered, isVisible, syncAutoplay]);
+
+  const handleCardPointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (event.button > 0) return;
+
+    dragGestureRef.current = {
+      startX: event.clientX,
+      startY: event.clientY,
+    };
+  };
+
+  const handleCardMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (event.button > 0) return;
+
+    dragGestureRef.current = {
+      startX: event.clientX,
+      startY: event.clientY,
+    };
+  };
+
+  const handleCardClick = (caseItem: CaseItem, event: React.MouseEvent<HTMLButtonElement>) => {
+    const gesture = dragGestureRef.current;
+    const movedTooFar =
+      !!gesture &&
+      (Math.abs(event.clientX - gesture.startX) > 6 || Math.abs(event.clientY - gesture.startY) > 6);
+
+    if (movedTooFar) {
+      event.preventDefault();
+      event.stopPropagation();
+      dragGestureRef.current = null;
+      return;
+    }
+
+    dragGestureRef.current = null;
+    setSelectedCase(caseItem);
+  };
+
+  const handleCasesMouseEnter = () => {
+    setIsCasesHovered(true);
+    syncAutoplay(false);
+  };
+
+  const handleCasesMouseLeave = () => {
+    setIsCasesHovered(false);
+    syncAutoplay(true);
+  };
 
   return (
     <section id="cases" className="py-16 bg-secondary/30 overflow-hidden scroll-mt-24">
@@ -384,31 +532,30 @@ const Cases = () => {
           
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center gap-2">
-          <button 
-  onClick={() => {
-    api?.scrollPrev();
-    autoplayPlugin.current.reset();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button
+              onClick={() => api?.scrollPrev()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
             <span className="text-xs text-muted-foreground px-2">
-              {current + 1} / {orderedCases.length}
+              {current + 1} / {shuffledCases.length}
             </span>
-            <button onClick={() => {
-    api?.scrollNext();
-    autoplayPlugin.current.reset();
-  }}
-  className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
->
+            <button
+              onClick={() => api?.scrollNext()}
+              className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
+            >
               <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="cases-carousel-mask relative overflow-visible">
+      <div
+        className="cases-carousel-mask relative overflow-visible"
+        onMouseEnter={handleCasesMouseEnter}
+        onMouseLeave={handleCasesMouseLeave}
+      >
         <Carousel
           setApi={setApi}
           plugins={[autoplayPlugin.current]}
@@ -416,25 +563,21 @@ const Cases = () => {
             align: 'center',
             loop: true,
           }}
-          className="w-full"
+          className="w-full cursor-grab active:cursor-grabbing select-none"
         >
           <CarouselContent className="-ml-4 md:-ml-4">
-            {orderedCases.map((caseItem) => (
+            {shuffledCases.map((caseItem) => (
               <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]">
                 <button
-                  onClick={() => setSelectedCase(caseItem)}
-                  className="w-full text-left p-5 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all duration-300 group h-full flex flex-col relative"
+                  type="button"
+                  onPointerDown={handleCardPointerDown}
+                  onMouseDown={handleCardMouseDown}
+                  onClick={(event) => handleCardClick(caseItem, event)}
+                  className="w-full text-left p-5 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all duration-300 group h-full flex flex-col relative cursor-grab active:cursor-grabbing select-none touch-manipulation"
                 >
                   {caseItem.year != null && (
                     <span
-                      className="absolute top-0 right-0 z-10 text-xs font-medium px-2.5 py-1 text-white shadow-sm"
-                      style={{
-                        backgroundColor: '#009c3b',
-                        borderTopRightRadius: '1rem',
-                        borderBottomLeftRadius: '0.5rem',
-                        borderBottomRightRadius: '0.5rem',
-                        borderTopLeftRadius: 0,
-                      }}
+                      className="absolute top-0 right-0 z-10 text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium"
                     >
                       {caseItem.year}
                     </span>
@@ -444,7 +587,14 @@ const Cases = () => {
                       <img
                         src={caseItem.print}
                         alt=""
-                        className="w-full h-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-105"
+                        draggable={false}
+                        className={`w-full h-full object-cover ${
+                          caseItem.imagePosition === 'bottom'
+                            ? 'object-bottom'
+                            : caseItem.imagePosition === 'center'
+                              ? 'object-center'
+                              : 'object-top'
+                        } transition-transform duration-300 ease-out group-hover:scale-105`}
                       />
                     ) : (
                       <span className="text-xs text-muted-foreground">{caseItem.print}</span>
@@ -481,7 +631,7 @@ const Cases = () => {
 
       <div className="mt-4 flex justify-center">
         <div className="flex gap-1">
-          {orderedCases.map((_, i) => (
+          {shuffledCases.map((_, i) => (
             <button
               key={i}
               onClick={() => api?.scrollTo(i)}
@@ -505,7 +655,13 @@ const Cases = () => {
                   <img
                     src={selectedCase.print}
                     alt=""
-                    className="w-full object-cover object-top"
+                    className={`w-full object-cover ${
+                      selectedCase.imagePosition === 'bottom'
+                        ? 'object-bottom'
+                        : selectedCase.imagePosition === 'center'
+                          ? 'object-center'
+                          : 'object-top'
+                    }`}
                     style={{ height: 'clamp(160px, 28vw, 260px)' }}
                   />
                 </div>
@@ -518,6 +674,9 @@ const Cases = () => {
                   <DialogTitle className="text-lg font-semibold text-foreground break-words leading-snug whitespace-pre-line">
                     {selectedCase.title}
                   </DialogTitle>
+                  <DialogDescription className="sr-only">
+                    Detalhes do case com contexto, acoes, resultado e evidencias.
+                  </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-6 mt-2">

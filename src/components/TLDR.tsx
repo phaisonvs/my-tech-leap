@@ -5,17 +5,17 @@ const cards = [
   {
     icon: Briefcase,
     title: 'Desafios além do cargo',
-    text: 'Para que as entregas definidas pela diretoria aconteçam, sempre foi necessário ir além do UX/UI: ser dono do projeto, conduzir a execução, assumir a execução técnica e garantir a sustentação.',
+    text: 'Há 3 anos e meio atuo além do escopo de UI/UX para conduzir as entregas e destravar temas críticos da operação.',
   },
   {
     icon: Code2,
     title: 'Execução técnica (front-end + integrações)',
-    text: 'A execução não fica só no direcionamento: eu implemento front-end, integrações e tracking para destravar dependências e colocar a evolução em produção.',
+    text: 'Assumo frentes técnicas para remover dependências, viabilizar integrações e garantir a entrega nos devidos prazos.',
   },
   {
     icon: RefreshCw,
     title: 'Sustentação e evolução do funil',
-    text: 'Depois que vai ao ar, eu sigo sustentando o que é crítico e evoluindo correções e melhorias pelo impacto no funil, inclusive estruturando melhor os KPIs quando ainda não estão claros.',
+    text: 'Mantenho atuação contínua na sustentação do funil, destravando correções e evoluções com foco em resultado.',
   },
 ];
 

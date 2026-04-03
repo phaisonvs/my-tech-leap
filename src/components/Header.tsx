@@ -6,7 +6,6 @@ const navLinks = [
   { href: '#tldr', label: 'TL;DR' },
   { href: '#cases', label: 'Cases' },
   { href: '#desafio', label: 'Desafio' },
-  { href: '#objetivos-techlead', label: 'Objetivos' },
   { href: '#escopo', label: 'Escopo' },
   { href: '#evolucao', label: 'Evolução' },
   { href: '#pedido', label: 'Pedido' },

@@ -44,7 +44,7 @@ const Scope = () => {
         }`}
       >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-8">
-          O que eu quero assumir como Tech Lead (incluindo CRO)
+          Objetivos que quero alcançar como Tech Lead CRO
         </h2>
 
         {/* Tab switcher */}

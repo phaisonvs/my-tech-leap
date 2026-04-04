@@ -16,7 +16,6 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
 import { dataUiPath } from "@/lib/data-ui";
 
 const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
@@ -36,7 +35,7 @@ interface StatItemIntro {
   icon: LucideIcon;
   title: string;
   isIntro: true;
-  introText: ReactNode;
+  introText: string;
 }
 
 interface StatItemKpi {
@@ -74,15 +73,8 @@ const stats: StatItem[] = [
     icon: MessageCircle,
     title: "",
     isIntro: true,
-    introText: (
-      <>
-        <strong className="font-semibold text-foreground">
-          Interaja com os cards!
-        </strong>
-        <br />
-        Reuni os meus principais indicadores dos últimos 4 anos.
-      </>
-    ),
+    introText:
+      "Nesses cards, reuni alguns dos meus principais indicadores dos últimos 4 anos.",
   },
   {
     icon: Plug,
@@ -822,7 +814,7 @@ const Hero = () => {
                             </div>
                             {isIntro ? (
                               <p
-                                className="whitespace-pre-line text-foreground/85 font-normal text-base md:text-lg leading-snug"
+                                className="text-foreground/85 font-normal text-base md:text-lg leading-snug"
                                 data-ui={dataUiPath(
                                   "hero",
                                   "card",

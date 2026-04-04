@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { useEffect, type ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { dataUiPath } from "@/lib/data-ui";
 
 const { autoplayMock, autoplayFactoryMock, fakeCarouselApi, resetAutoplayState } = vi.hoisted(() => {
   let playing = false;
@@ -46,15 +47,26 @@ vi.mock("@/components/cases-utils", () => ({
 }));
 
 vi.mock("@/components/ui/carousel", () => ({
-  Carousel: ({ children, setApi }: { children: ReactNode; setApi?: (api: typeof fakeCarouselApi) => void }) => {
+  Carousel: ({
+    children,
+    setApi,
+    ...props
+  }: {
+    children: ReactNode;
+    setApi?: (api: typeof fakeCarouselApi) => void;
+  } & React.HTMLAttributes<HTMLDivElement>) => {
     useEffect(() => {
       setApi?.(fakeCarouselApi);
     }, [setApi]);
 
-    return <div>{children}</div>;
+    return <div {...props}>{children}</div>;
   },
-  CarouselContent: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  CarouselItem: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  CarouselContent: ({ children, ...props }: { children: ReactNode } & React.HTMLAttributes<HTMLDivElement>) => (
+    <div {...props}>{children}</div>
+  ),
+  CarouselItem: ({ children, ...props }: { children: ReactNode } & React.HTMLAttributes<HTMLDivElement>) => (
+    <div {...props}>{children}</div>
+  ),
 }));
 
 vi.mock("@/hooks/use-in-view", () => ({
@@ -83,6 +95,18 @@ describe("Cases", () => {
   it("pauses on hover and resumes when the mouse leaves the section", async () => {
     const { container } = render(<Cases />);
     const carouselWrapper = container.querySelector(".cases-carousel-mask");
+
+    expect(
+      container.querySelector(`[data-ui="${dataUiPath("cases", "root")}"]`),
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector(`[data-ui="${dataUiPath("cases", "carousel")}"]`),
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector(
+        `[data-ui="${dataUiPath("cases", "pagination")}"]`,
+      ),
+    ).toBeInTheDocument();
 
     expect(carouselWrapper).toBeTruthy();
     expect(autoplayFactoryMock).toHaveBeenCalled();

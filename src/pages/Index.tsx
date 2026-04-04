@@ -6,12 +6,16 @@ import Scope from '@/components/Scope';
 import Evolution from '@/components/Evolution';
 import Request from '@/components/Request';
 import Footer from '@/components/Footer';
+import { dataUiPath } from '@/lib/data-ui';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div
+      className="min-h-screen bg-background text-foreground overflow-x-hidden"
+      data-ui={dataUiPath('page', 'home', 'root')}
+    >
       <Header />
-      <main>
+      <main data-ui={dataUiPath('page', 'home', 'main')}>
         <Hero />
         <TLDR />
         <Cases />

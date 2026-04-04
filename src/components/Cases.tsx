@@ -5,6 +5,7 @@ import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/com
 import Autoplay from 'embla-carousel-autoplay';
 import { useInView } from '@/hooks/use-in-view';
 import { shuffleArray, uniqueCases } from '@/components/cases-utils';
+import { dataUiPath, toUiKey } from '@/lib/data-ui';
 
 interface CaseItem {
   id: number;
@@ -21,6 +22,8 @@ interface CaseItem {
   evidences?: { label: string; href: string }[];
   year?: number;
 }
+
+const getCaseUiKey = (caseItem: CaseItem) => `${caseItem.id}-${toUiKey(caseItem.title)}`;
 
 const createGenericCase = (
   id: number,
@@ -511,29 +514,31 @@ const Cases = () => {
   };
 
   return (
-    <section id="cases" className="py-16 bg-secondary/30 overflow-hidden scroll-mt-24">
+    <section id="cases" className="py-16 bg-secondary/30 overflow-hidden scroll-mt-24" data-ui={dataUiPath('cases', 'root')}>
       <div 
         ref={ref as React.RefObject<HTMLDivElement>}
+        data-ui={dataUiPath('cases', 'content')}
         className={`container mx-auto max-w-5xl px-4 md:px-6 transition-all duration-700 ease-out ${
           isVisible 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
       >
-        <div className="flex items-end justify-between mb-6 md:mb-4">
-          <div>
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
+        <div className="flex items-end justify-between mb-6 md:mb-4" data-ui={dataUiPath('cases', 'header')}>
+          <div data-ui={dataUiPath('cases', 'header', 'copy')}>
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2" data-ui={dataUiPath('cases', 'title')}>
               Cases entregues (evidências)
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground" data-ui={dataUiPath('cases', 'subtitle')}>
               Passe pro lado. Cada card traz um resumo; ao abrir, você vê problema, execução, resultado e evidências.
             </p>
           </div>
           
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2" data-ui={dataUiPath('cases', 'nav', 'desktop')}>
             <button
               onClick={() => api?.scrollPrev()}
+              data-ui={dataUiPath('cases', 'nav', 'prev')}
               className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
             >
               <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -543,6 +548,7 @@ const Cases = () => {
             </span>
             <button
               onClick={() => api?.scrollNext()}
+              data-ui={dataUiPath('cases', 'nav', 'next')}
               className="p-2 rounded-full bg-card border border-border hover:border-primary/50 hover:bg-primary/10 transition-all group"
             >
               <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -553,6 +559,7 @@ const Cases = () => {
 
       <div
         className="cases-carousel-mask relative overflow-visible"
+        data-ui={dataUiPath('cases', 'carousel', 'mask')}
         onMouseEnter={handleCasesMouseEnter}
         onMouseLeave={handleCasesMouseLeave}
       >
@@ -564,30 +571,34 @@ const Cases = () => {
             loop: true,
           }}
           className="w-full cursor-grab active:cursor-grabbing select-none"
+          data-ui={dataUiPath('cases', 'carousel')}
         >
-          <CarouselContent className="-ml-4 md:-ml-4">
+          <CarouselContent className="-ml-4 md:-ml-4" data-ui={dataUiPath('cases', 'carousel', 'content')}>
             {shuffledCases.map((caseItem) => (
-              <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]">
+              <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]" data-ui={dataUiPath('cases', 'carousel', 'item', getCaseUiKey(caseItem))}>
                 <button
                   type="button"
                   onPointerDown={handleCardPointerDown}
                   onMouseDown={handleCardMouseDown}
                   onClick={(event) => handleCardClick(caseItem, event)}
+                  data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem))}
                   className="w-full text-left p-5 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all duration-300 group h-full flex flex-col relative cursor-grab active:cursor-grabbing select-none touch-manipulation"
                 >
                   {caseItem.year != null && (
                     <span
                       className="absolute top-0 right-0 z-10 text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium"
+                      data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'year')}
                     >
                       {caseItem.year}
                     </span>
                   )}
-                  <div className="aspect-video w-full rounded-xl bg-secondary/50 border border-border/50 mb-4 flex items-center justify-center relative overflow-hidden">
+                  <div className="aspect-video w-full rounded-xl bg-secondary/50 border border-border/50 mb-4 flex items-center justify-center relative overflow-hidden" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image')}>
                     {caseItem.print.startsWith('/') || caseItem.print.startsWith('http') ? (
                       <img
                         src={caseItem.print}
                         alt=""
                         draggable={false}
+                        data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image', 'asset')}
                         className={`w-full h-full object-cover ${
                           caseItem.imagePosition === 'bottom'
                             ? 'object-bottom'
@@ -599,27 +610,27 @@ const Cases = () => {
                     ) : (
                       <span className="text-xs text-muted-foreground">{caseItem.print}</span>
                     )}
-                    <div className="absolute bottom-2 right-2 w-7 h-7 rounded-lg bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:scale-110">
+                    <div className="absolute bottom-2 right-2 w-7 h-7 rounded-lg bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:scale-110" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image', 'badge')}>
                       <ArrowUpRight className="w-3.5 h-3.5 text-primary" />
                     </div>
                   </div>
                   
                   {/* Tags */}
-                  <div className="flex gap-2 mb-3">
+                  <div className="flex gap-2 mb-3" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'tags')}>
                     {caseItem.tags.map((tag, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'tag', i + 1)}>
                         {tag}
                       </span>
                     ))}
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-sm font-medium text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 whitespace-pre-line">
+                  <h3 className="text-sm font-medium text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 whitespace-pre-line" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'title')}>
                     {caseItem.title}
                   </h3>
                   
                   {/* Impact */}
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <p className="text-xs text-muted-foreground leading-relaxed" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'impact')}>
                     {caseItem.impact}
                   </p>
                 </button>
@@ -629,12 +640,13 @@ const Cases = () => {
         </Carousel>
       </div>
 
-      <div className="mt-4 flex justify-center">
-        <div className="flex gap-1">
+      <div className="mt-4 flex justify-center" data-ui={dataUiPath('cases', 'pagination')}>
+        <div className="flex gap-1" data-ui={dataUiPath('cases', 'pagination', 'dots')}>
           {shuffledCases.map((_, i) => (
             <button
               key={i}
               onClick={() => api?.scrollTo(i)}
+              data-ui={dataUiPath('cases', 'pagination', 'dot', i + 1)}
               className={`h-1 rounded-full transition-all duration-300 ${
                 i === current 
                   ? 'bg-primary w-4' 
@@ -647,14 +659,15 @@ const Cases = () => {
 
       {/* Modal */}
       <Dialog open={!!selectedCase} onOpenChange={() => setSelectedCase(null)}>
-        <DialogContent className="max-w-2xl w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] flex flex-col p-0 gap-0 bg-card border-border overflow-hidden">
+        <DialogContent className="max-w-2xl w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] flex flex-col p-0 gap-0 bg-card border-border overflow-hidden" data-ui={dataUiPath('cases', 'modal')}>
           {selectedCase && (
             <>
               {(selectedCase.print.startsWith('/') || selectedCase.print.startsWith('http')) && (
-                <div className="w-full flex-shrink-0 overflow-hidden rounded-t-lg">
+                <div className="w-full flex-shrink-0 overflow-hidden rounded-t-lg" data-ui={dataUiPath('cases', 'modal', 'image')}>
                   <img
                     src={selectedCase.print}
                     alt=""
+                    data-ui={dataUiPath('cases', 'modal', 'image', 'asset')}
                     className={`w-full object-cover ${
                       selectedCase.imagePosition === 'bottom'
                         ? 'object-bottom'
@@ -670,8 +683,8 @@ const Cases = () => {
                 <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-10 bg-gradient-to-t from-card to-transparent" aria-hidden />
                 <div className="absolute top-0 left-0 right-0 h-12 pointer-events-none z-10 bg-gradient-to-b from-card to-transparent" aria-hidden />
                 <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden p-5 md:p-8 pb-8">
-                <DialogHeader className="pr-10 sm:pr-12 pb-4 pt-1 space-y-2 text-left">
-                  <DialogTitle className="text-lg font-semibold text-foreground break-words leading-snug whitespace-pre-line">
+                <DialogHeader className="pr-10 sm:pr-12 pb-4 pt-1 space-y-2 text-left" data-ui={dataUiPath('cases', 'modal', 'header')}>
+                  <DialogTitle className="text-lg font-semibold text-foreground break-words leading-snug whitespace-pre-line" data-ui={dataUiPath('cases', 'modal', 'title')}>
                     {selectedCase.title}
                   </DialogTitle>
                   <DialogDescription className="sr-only">
@@ -679,60 +692,61 @@ const Cases = () => {
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-6 mt-2">
-                  <div className="flex flex-wrap gap-2">
+                <div className="space-y-6 mt-2" data-ui={dataUiPath('cases', 'modal', 'content')}>
+                  <div className="flex flex-wrap gap-2" data-ui={dataUiPath('cases', 'modal', 'tags')}>
                     {selectedCase.tags.map((tag, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium">
+                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium" data-ui={dataUiPath('cases', 'modal', 'tag', i + 1)}>
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="p-5 md:p-6 rounded-xl bg-secondary/50 border border-border">
-                    <h4 className="text-xs font-medium text-primary uppercase tracking-wide mb-2">
+                  <div className="p-5 md:p-6 rounded-xl bg-secondary/50 border border-border" data-ui={dataUiPath('cases', 'modal', 'problem')}>
+                    <h4 className="text-xs font-medium text-primary uppercase tracking-wide mb-2" data-ui={dataUiPath('cases', 'modal', 'problem', 'label')}>
                       {selectedCase.problemLabel ?? 'Problema'}
                     </h4>
-                    <p className="text-sm text-foreground leading-relaxed">{selectedCase.problem}</p>
+                    <p className="text-sm text-foreground leading-relaxed" data-ui={dataUiPath('cases', 'modal', 'problem', 'text')}>{selectedCase.problem}</p>
                   </div>
 
-                  <div>
-                    <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">O que eu fiz</h4>
+                  <div data-ui={dataUiPath('cases', 'modal', 'actions')}>
+                    <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3" data-ui={dataUiPath('cases', 'modal', 'actions', 'title')}>O que eu fiz</h4>
                     <div className="relative pl-6">
                       <span className="absolute left-[0.4rem] top-2 bottom-2 w-px bg-border" aria-hidden />
-                      <ul className="relative space-y-3">
+                      <ul className="relative space-y-3" data-ui={dataUiPath('cases', 'modal', 'actions', 'list')}>
                         {selectedCase.actions.map((action, i) => (
-                          <li key={i} className="relative flex gap-3 items-start leading-relaxed">
-                            <span className="w-5 h-5 rounded-md bg-primary/10 text-primary text-xs flex items-center justify-center flex-shrink-0 mt-0.5 relative z-[1] bg-card">
+                          <li key={i} className="relative flex gap-3 items-start leading-relaxed" data-ui={dataUiPath('cases', 'modal', 'actions', 'item', i + 1)}>
+                            <span className="w-5 h-5 rounded-md bg-primary/10 text-primary text-xs flex items-center justify-center flex-shrink-0 mt-0.5 relative z-[1] bg-card" data-ui={dataUiPath('cases', 'modal', 'actions', 'item', i + 1, 'index')}>
                               {i + 1}
                             </span>
-                            <span className="text-sm text-muted-foreground">{action}</span>
+                            <span className="text-sm text-muted-foreground" data-ui={dataUiPath('cases', 'modal', 'actions', 'item', i + 1, 'text')}>{action}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
 
-                  <div className="p-5 md:p-6 rounded-xl bg-primary/5 border border-primary/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <div className="p-5 md:p-6 rounded-xl bg-primary/5 border border-primary/20" data-ui={dataUiPath('cases', 'modal', 'result')}>
+                    <div className="flex items-center gap-2 mb-2" data-ui={dataUiPath('cases', 'modal', 'result', 'header')}>
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0" data-ui={dataUiPath('cases', 'modal', 'result', 'icon')}>
                         <CheckCircle2 className="w-4 h-4 text-primary" />
                       </div>
-                      <h4 className="text-xs font-medium text-primary uppercase tracking-wide">Resultado</h4>
+                      <h4 className="text-xs font-medium text-primary uppercase tracking-wide" data-ui={dataUiPath('cases', 'modal', 'result', 'title')}>Resultado</h4>
                     </div>
-                    <p className="text-sm text-foreground font-medium leading-relaxed">{selectedCase.result}</p>
+                    <p className="text-sm text-foreground font-medium leading-relaxed" data-ui={dataUiPath('cases', 'modal', 'result', 'text')}>{selectedCase.result}</p>
                   </div>
 
-                  <div>
+                  <div data-ui={dataUiPath('cases', 'modal', 'evidence')}>
                     <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Evidências</h4>
                     {selectedCase.evidences?.length ? (
-                      <ul className="space-y-2">
+                      <ul className="space-y-2" data-ui={dataUiPath('cases', 'modal', 'evidence', 'list')}>
                         {selectedCase.evidences.map((ev, i) => (
-                          <li key={i}>
+                          <li key={i} data-ui={dataUiPath('cases', 'modal', 'evidence', 'item', i + 1)}>
                             <a
                               href={ev.href}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-sm text-primary hover:underline inline-flex items-center gap-1.5 group"
+                              data-ui={dataUiPath('cases', 'modal', 'evidence', 'item', i + 1, 'link')}
                             >
                               {ev.label}
                               <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0" />
@@ -746,6 +760,7 @@ const Cases = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-primary hover:underline flex items-center gap-1.5 group"
+                        data-ui={dataUiPath('cases', 'modal', 'evidence', 'link')}
                       >
                         {selectedCase.evidence}
                         <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

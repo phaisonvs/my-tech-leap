@@ -16,8 +16,6 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
-import { dataUiPath } from "@/lib/data-ui";
 
 const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
 const COUNT_UP_DURATION = 2200;
@@ -36,7 +34,7 @@ interface StatItemIntro {
   icon: LucideIcon;
   title: string;
   isIntro: true;
-  introText: ReactNode;
+  introText: string;
 }
 
 interface StatItemKpi {
@@ -53,36 +51,13 @@ interface StatItemKpi {
 
 type StatItem = StatItemIntro | StatItemKpi;
 
-const heroStatUiKeys = [
-  "intro",
-  "integracoes-entregues",
-  "sustentacao-operacional",
-  "base-cro-e-mensuracao",
-  "jornadas-e-lps-publicadas",
-  "rotina-de-cro-cadencia",
-  "saude-do-frete",
-  "saude-do-pagamento",
-  "evolucao-continua-releases",
-  "cro-no-funil-de-franquia-venda",
-] as const;
-
-const getStatUiKey = (_stat: StatItem, index: number) =>
-  heroStatUiKeys[index] ?? `card-${index + 1}`;
-
 const stats: StatItem[] = [
   {
     icon: MessageCircle,
     title: "",
     isIntro: true,
-    introText: (
-      <>
-        <strong className="font-semibold text-foreground">
-          Interaja com os cards!
-        </strong>
-        <br />
-        Reuni os meus principais indicadores dos últimos 4 anos.
-      </>
-    ),
+    introText:
+      "Os cards a seguir consolidam boa parte do meu escopo atual em indicadores que eu venho monitorando.",
   },
   {
     icon: Plug,
@@ -582,47 +557,30 @@ const Hero = () => {
   const angleStep = isMobile ? ANGLE_STEP_MOBILE : ANGLE_STEP_DESKTOP;
 
   return (
-    <section
-      className="min-h-[90dvh] md:min-h-[82vh] flex flex-col justify-center pt-24 pb-10 md:pt-20 md:pb-12 px-4 md:px-6"
-      data-ui={dataUiPath("hero", "root")}
-    >
+    <section className="min-h-[90dvh] md:min-h-[82vh] flex flex-col justify-center pt-24 pb-10 md:pt-20 md:pb-12 px-4 md:px-6">
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         className={`container mx-auto max-w-5xl transition-all duration-700 ease-out flex flex-col justify-between ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
-        data-ui={dataUiPath("hero", "content")}
       >
         <div
           className="relative z-10 mb-4 md:mb-5 md:mt-12 text-center opacity-0 animate-[fade-in_0.8s_ease-out_forwards]"
           style={{ animationDelay: "100ms" }}
-          data-ui={dataUiPath("hero", "intro")}
         >
-          <h1
-            className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-3 md:mb-4 break-words"
-            data-ui={dataUiPath("hero", "title")}
-          >
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-3 md:mb-4 break-words">
             Formalização da atuação{"\u00A0"}como
             <br />
             <span className="text-primary">Tech Lead de CRO</span>
           </h1>
-          <p
-            className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words"
-            data-ui={dataUiPath("hero", "subtitle")}
-          >
-            Lidero na prática, UX/UI, front-end, integrações, sustentação e
-            evolução dos KPIs do funil.
+          <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words">
+            Hoje lidero, na prática, UX/UI, front-end, integrações, sustentação
+            e evolução dos KPIs do funil.
           </p>
         </div>
 
-        <div
-          className="relative w-full flex justify-center"
-          data-ui={dataUiPath("hero", "drum-wrap")}
-        >
-          <div
-            className="mt-2 select-none overflow-visible w-full md:max-w-[70%] relative"
-            data-ui={dataUiPath("hero", "drum")}
-          >
+        <div className="relative w-full flex justify-center">
+          <div className="mt-2 select-none overflow-visible w-full md:max-w-[70%] relative">
             <div
               ref={containerRef}
               className="relative z-0"
@@ -687,7 +645,6 @@ const Hero = () => {
                                 kpiStat.valueTargets!.map(() => 0),
                             )
                           : ""));
-                    const cardUiKey = getStatUiKey(stat, index);
 
                     return (
                       <div
@@ -710,13 +667,7 @@ const Hero = () => {
                         }}
                       >
                         <div
-                          className={`relative w-full max-w-[108%] md:max-w-full -m-4 p-4 ${index !== 0 ? "cursor-pointer" : ""}`}
-                          data-ui={dataUiPath(
-                            "hero",
-                            "card",
-                            cardUiKey,
-                            "frame",
-                          )}
+                          className={`w-full max-w-[108%] md:max-w-full -m-4 p-4 ${index !== 0 ? "cursor-pointer" : ""}`}
                           onMouseDown={
                             index !== 0
                               ? (e) => handleCardMouseDown(e, index)
@@ -744,12 +695,6 @@ const Hero = () => {
                                 ? "text-center flex flex-col items-center"
                                 : ""
                             }`}
-                            data-ui={dataUiPath(
-                              "hero",
-                              "card",
-                              cardUiKey,
-                              "body",
-                            )}
                             style={{
                               borderColor: isActive
                                 ? "hsl(var(--primary) / 0.4)"
@@ -762,35 +707,15 @@ const Hero = () => {
                             }}
                           >
                             {index !== 0 && (
-                              <div
-                                className="absolute top-3 right-3 w-5 h-5 flex items-center justify-center opacity-50 transition-opacity duration-200 hover:opacity-100"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "info",
-                                )}
-                              >
+                              <div className="absolute top-3 right-3 w-5 h-5 flex items-center justify-center opacity-50 transition-opacity duration-200 hover:opacity-100">
                                 <Info className="w-4 h-4 text-muted-foreground" />
                               </div>
                             )}
                             <div
                               className={`flex items-center gap-3 mb-3 ${index === 0 ? "justify-center" : ""}`}
-                              data-ui={dataUiPath(
-                                "hero",
-                                "card",
-                                cardUiKey,
-                                "header",
-                              )}
                             >
                               <div
                                 className="w-9 h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center shrink-0"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "icon",
-                                )}
                                 style={{
                                   backgroundColor: isActive
                                     ? "hsl(var(--primary) / 0.2)"
@@ -807,49 +732,21 @@ const Hero = () => {
                                 />
                               </div>
                               {!isIntro && (
-                                <span
-                                  className="text-xs md:text-sm text-muted-foreground"
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "title",
-                                  )}
-                                >
+                                <span className="text-xs md:text-sm text-muted-foreground">
                                   {stat.title}
                                 </span>
                               )}
                             </div>
                             {isIntro ? (
-                              <p
-                                className="whitespace-pre-line text-foreground/85 font-normal text-base md:text-lg leading-snug"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "text",
-                                )}
-                              >
+                              <p className="text-foreground/85 font-normal text-base md:text-lg leading-snug">
                                 {valueDisplay}
                               </p>
                             ) : (
                               <div
                                 className={`flex items-baseline ${kpiVeryShort ? "gap-x-0.5" : kpiShortDisplay ? "gap-x-0.5" : "gap-x-1.5"}`}
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "metric",
-                                )}
                               >
                                 <div
                                   className={`shrink-0 ${kpiVeryShort ? "min-w-[1.25rem] md:min-w-[1.5rem]" : kpiShortDisplay ? "min-w-[2rem] md:min-w-[2.5rem]" : "min-w-[2.5rem] md:min-w-[3rem]"}`}
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "value",
-                                  )}
                                 >
                                   <span
                                     className={`text-lg md:text-xl font-semibold text-foreground inline-block origin-center ${
@@ -857,26 +754,11 @@ const Hero = () => {
                                         ? "animate-value-count-pop"
                                         : ""
                                     }`}
-                                    data-ui={dataUiPath(
-                                      "hero",
-                                      "card",
-                                      cardUiKey,
-                                      "value",
-                                      "text",
-                                    )}
                                   >
                                     {valueDisplay}
                                   </span>
                                 </div>
-                                <span
-                                  className="text-sm md:text-base font-light text-foreground/75"
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "support-line",
-                                  )}
-                                >
+                                <span className="text-sm md:text-base font-light text-foreground/75">
                                   {kpiStat?.supportLine}
                                 </span>
                               </div>
@@ -916,10 +798,7 @@ const Hero = () => {
               />
             </div>
 
-            <div
-              className="relative z-10 flex justify-center gap-1.5 mt-14 md:mt-16 md:gap-2"
-              data-ui={dataUiPath("hero", "dots")}
-            >
+            <div className="relative z-10 flex justify-center gap-1.5 mt-14 md:mt-16 md:gap-2">
               {stats.map((_, i) => {
                 const isActive = activeIndex === i;
                 return (
@@ -927,7 +806,6 @@ const Hero = () => {
                     key={i}
                     onClick={() => goToCard(i)}
                     aria-label={`Card ${i + 1}`}
-                    data-ui={dataUiPath("hero", "dot", i + 1)}
                     className="rounded-full border-0 cursor-pointer transition-all duration-300 shrink-0"
                     style={{
                       width: isMobile ? (isActive ? 14 : 4) : isActive ? 18 : 6,
@@ -942,10 +820,7 @@ const Hero = () => {
                 );
               })}
             </div>
-            <div
-              className="relative z-10 flex justify-center mt-8 md:mt-10 pb-1"
-              data-ui={dataUiPath("hero", "scroll-next", "wrap")}
-            >
+            <div className="relative z-10 flex justify-center mt-8 md:mt-10 pb-1">
               <button
                 onClick={() =>
                   document
@@ -954,7 +829,6 @@ const Hero = () => {
                 }
                 aria-label="Ir para próxima seção"
                 className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-primary/25 bg-primary/5 text-primary/80 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-300 animate-arrow-float-subtle"
-                data-ui={dataUiPath("hero", "scroll-next")}
               >
                 <ChevronDown className="w-5 h-5 md:w-5 md:h-5" />
               </button>
@@ -981,20 +855,17 @@ const Hero = () => {
         "popup" in stats[openModalIndex] && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-modal-fade-in"
-            data-ui={dataUiPath("hero", "modal")}
             onClick={() => setOpenModalIndex(null)}
           >
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
             <div
               className="relative z-10 w-full max-w-md bg-card border border-border rounded-2xl p-6 shadow-2xl animate-modal-scale-in"
-              data-ui={dataUiPath("hero", "modal", "content")}
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setOpenModalIndex(null)}
                 className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-muted transition-colors duration-200"
                 aria-label="Fechar"
-                data-ui={dataUiPath("hero", "modal", "close")}
               >
                 <X className="w-5 h-5 text-muted-foreground" />
               </button>
@@ -1004,44 +875,28 @@ const Hero = () => {
                 const Icon = stat.icon;
                 return (
                   <>
-                    <div
-                      className="flex items-center gap-4 mb-4"
-                      data-ui={dataUiPath("hero", "modal", "header")}
-                    >
-                      <div
-                        className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center shrink-0"
-                        data-ui={dataUiPath("hero", "modal", "icon")}
-                      >
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
                         <Icon className="w-6 h-6 text-primary" />
                       </div>
-                      <h3
-                        className="text-lg font-semibold text-foreground"
-                        data-ui={dataUiPath("hero", "modal", "title")}
-                      >
+                      <h3 className="text-lg font-semibold text-foreground">
                         {pop.title}
                       </h3>
                     </div>
-                    <div
-                      className="space-y-4 text-sm text-muted-foreground leading-relaxed"
-                      data-ui={dataUiPath("hero", "modal", "body")}
-                    >
-                      <div
-                        data-ui={dataUiPath("hero", "modal", "body", "measure")}
-                      >
+                    <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                      <div>
                         <span className="font-medium text-foreground">
                           O que mede:{" "}
                         </span>
                         {pop.oQueMede}
                       </div>
-                      <div
-                        data-ui={dataUiPath("hero", "modal", "body", "read")}
-                      >
+                      <div>
                         <span className="font-medium text-foreground">
                           Como ler:{" "}
                         </span>
                         {pop.comoLer}
                       </div>
-                      <div data-ui={dataUiPath("hero", "modal", "body", "why")}>
+                      <div>
                         <span className="font-medium text-foreground">
                           Por que importa:{" "}
                         </span>

@@ -1,18 +1,17 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ExternalLink, ChevronLeft, ChevronRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
 import { useInView } from '@/hooks/use-in-view';
 import { shuffleArray, uniqueCases } from '@/components/cases-utils';
-import { dataUiPath, toUiKey } from '@/lib/data-ui';
+import { dataUiPath } from '@/lib/data-ui';
 
 interface CaseItem {
   id: number;
   title: string;
   tags: string[];
   impact: string;
-  print: string;
+  src: string;
   imagePosition?: 'top' | 'center' | 'bottom';
   problem: string;
   problemLabel?: string;
@@ -23,12 +22,10 @@ interface CaseItem {
   year?: number;
 }
 
-const getCaseUiKey = (caseItem: CaseItem) => `${caseItem.id}-${toUiKey(caseItem.title)}`;
-
 const createGenericCase = (
   id: number,
   title: string,
-  print: string,
+  src: string,
   tags: string[],
   imagePosition: 'top' | 'center' | 'bottom' = 'top'
 ): CaseItem => ({
@@ -36,7 +33,7 @@ const createGenericCase = (
   title,
   tags,
   impact: `${title} com foco em experiência, execução técnica e conversão.`,
-  print,
+  src,
   imagePosition,
   problem:
     `A frente "${title}" exigia evolução de jornada e execução de front-end para reduzir atrito e sustentar crescimento do funil.`,
@@ -57,7 +54,7 @@ const cases: CaseItem[] = [
     title: 'Localpage',
     tags: ['UX/UI', 'Front-end', 'SEO'],
     impact: 'UI/UX + front: componentes reutilizáveis, layout responsivo e roteamento hierárquico (estado→cidade→loja) para escalar o diretório',
-    print: '/cases/1-localpage.jpg',
+    src: '/cases/1-localpage.jpg',
     problem: 'Escalar SEO local e entrada de novas lojas exigia um diretório padronizado, com estrutura previsível (rotas/URLs) e baixa manutenção para não gerar duplicidades.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -78,7 +75,7 @@ const cases: CaseItem[] = [
     title: 'Black Friday ABC',
     tags: ['CRO', 'Front-end', 'Campanha'],
     impact: 'Landing e fluxo de conversão para campanha Black Friday com foco em clareza e performance.',
-    print: '/cases/2-black-friday-abc.jpg',
+    src: '/cases/2-black-friday-abc.jpg',
     problem: 'A campanha Black Friday exigia uma experiência dedicada, com mensagem clara, CTAs visíveis e integração com estoque/preço para evitar fricção no pico de demanda.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -95,7 +92,7 @@ const cases: CaseItem[] = [
     title: 'Visita à obra',
     tags: ['UX/UI', 'Jornada'],
     impact: 'Jornada de agendamento e experiência de visita à obra com foco em conversão e clareza.',
-    print: '/cases/3-visita-a-obra.jpg',
+    src: '/cases/3-visita-a-obra.jpg',
     problem: 'Era necessário oferecer uma jornada clara de agendamento de visita à obra, reduzindo atrito e aumentando o preenchimento de formulários e conversão.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -112,7 +109,7 @@ const cases: CaseItem[] = [
     title: 'Página de cupons',
     tags: ['UX/UI', 'Front-end', 'CRO'],
     impact: 'Página de cupons com destaque de ofertas e CTAs para aumento de uso e conversão.',
-    print: '/cases/4-pagina-de-cupons.jpg',
+    src: '/cases/4-pagina-de-cupons.jpg',
     problem: 'A página de cupons precisava ser mais clara e acionável, com ofertas em destaque e caminho óbvio para uso no checkout.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -129,7 +126,7 @@ const cases: CaseItem[] = [
     title: 'Página de encarte lead',
     tags: ['UX/UI', 'Front-end'],
     impact: 'Evolução da experiência de cupons com foco em clareza e conversão.',
-    print: '/cases/5-pagina-de-encarte-lead.jpg',
+    src: '/cases/5-pagina-de-encarte-lead.jpg',
     problem: 'Evolução contínua da página de cupons para melhorar descoberta, legibilidade e taxa de aplicação no checkout.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -146,7 +143,7 @@ const cases: CaseItem[] = [
     title: 'Login Users Prime',
     tags: ['UX/UI', 'Front-end', 'Autenticação'],
     impact: 'Fluxo de login e experiência para usuários Prime com redução de atrito e clareza.',
-    print: '/cases/6-login-users-prime.jpg',
+    src: '/cases/6-login-users-prime.jpg',
     problem: 'O fluxo de login para usuários Prime precisava ser claro, seguro e alinhado ao restante da jornada para evitar abandono em etapa crítica.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -163,7 +160,7 @@ const cases: CaseItem[] = [
     title: 'Checkout ABC da Construção',
     tags: ['CRO', 'Front-end', 'Checkout'],
     impact: 'Checkout ABC com foco em clareza, redução de atrito e conversão na etapa final.',
-    print: '/cases/7-checkout-abc-da-construcao.jpg',
+    src: '/cases/7-checkout-abc-da-construcao.jpg',
     problem: 'O checkout precisava de revisão de UX e consistência técnica para reduzir abandono e falhas na etapa final do funil.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -184,7 +181,7 @@ const cases: CaseItem[] = [
     title: 'Checkout ABC Prime',
     tags: ['CRO', 'Front-end', 'Checkout'],
     impact: 'Versão do checkout para usuários Prime com benefícios visíveis e fluxo dedicado.',
-    print: '/cases/8-checkout-abcprime.jpg',
+    src: '/cases/8-checkout-abcprime.jpg',
     problem: 'Usuários Prime precisavam de uma experiência de checkout que destacasse benefícios (frete, ofertas) sem quebrar o fluxo padrão.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -201,7 +198,7 @@ const cases: CaseItem[] = [
     title: 'Header menu ABC da Construção',
     tags: ['UX/UI', 'Front-end', 'Navegação'],
     impact: 'Header e menu padronizados para melhor navegação e descoberta no site.',
-    print: '/cases/9-header-menu-abc-da-construcao.jpg',
+    src: '/cases/9-header-menu-abc-da-construcao.jpg',
     problem: 'O header e o menu precisavam ser consistentes, acessíveis e alinhados às jornadas de conversão em todas as páginas.',
     problemLabel: 'Contexto / Dor',
     actions: [
@@ -216,7 +213,7 @@ const cases: CaseItem[] = [
   createGenericCase(
     10,
     'Novo Front E-com ABC',
-    '/cases/10-novo-front-e-com-abc.jpg',
+    '/cases/10-novo-front-e-com-abc.png',
     ['Front-end', 'UX/UI', 'Plataforma']
   ),
   createGenericCase(
@@ -409,46 +406,22 @@ const cases: CaseItem[] = [
   ),
 ];
 
-const dedupedCases = uniqueCases(cases);
+const casesForDedup = cases.map((caseItem) => ({
+  ...caseItem,
+  print: caseItem.src,
+}));
+const dedupedCases = uniqueCases(casesForDedup).map(({ print: _print, ...caseItem }) => caseItem);
 const shuffledCases = shuffleArray(dedupedCases);
+const hasRenderableImage = (src: string) => src.startsWith('/') || src.startsWith('http');
 
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isCasesHovered, setIsCasesHovered] = useState(false);
   const dragGestureRef = useRef<{
     startX: number;
     startY: number;
   } | null>(null);
-
-  const autoplayPlugin = useRef(
-    Autoplay({
-      delay: 1800,
-      playOnInit: false,
-      stopOnInteraction: true,
-      stopOnMouseEnter: false,
-      stopOnFocusIn: false,
-    })
-  );
-
-  const syncAutoplay = useCallback(
-    (shouldPlay: boolean) => {
-      if (!api) return;
-
-      if (shouldPlay) {
-        if (!autoplayPlugin.current.isPlaying()) {
-          autoplayPlugin.current.play();
-        }
-        return;
-      }
-
-      if (autoplayPlugin.current.isPlaying()) {
-        autoplayPlugin.current.stop();
-      }
-    },
-    [api]
-  );
 
   useEffect(() => {
     if (!api) return;
@@ -463,10 +436,6 @@ const Cases = () => {
   }, [api]);
 
   const { ref, isVisible } = useInView();
-
-  useEffect(() => {
-    syncAutoplay(isVisible && !isCasesHovered);
-  }, [isCasesHovered, isVisible, syncAutoplay]);
 
   const handleCardPointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
     if (event.button > 0) return;
@@ -501,16 +470,6 @@ const Cases = () => {
 
     dragGestureRef.current = null;
     setSelectedCase(caseItem);
-  };
-
-  const handleCasesMouseEnter = () => {
-    setIsCasesHovered(true);
-    syncAutoplay(false);
-  };
-
-  const handleCasesMouseLeave = () => {
-    setIsCasesHovered(false);
-    syncAutoplay(true);
   };
 
   return (
@@ -560,12 +519,9 @@ const Cases = () => {
       <div
         className="cases-carousel-mask relative overflow-visible"
         data-ui={dataUiPath('cases', 'carousel', 'mask')}
-        onMouseEnter={handleCasesMouseEnter}
-        onMouseLeave={handleCasesMouseLeave}
       >
         <Carousel
           setApi={setApi}
-          plugins={[autoplayPlugin.current]}
           opts={{
             align: 'center',
             loop: true,
@@ -574,31 +530,31 @@ const Cases = () => {
           data-ui={dataUiPath('cases', 'carousel')}
         >
           <CarouselContent className="-ml-4 md:-ml-4" data-ui={dataUiPath('cases', 'carousel', 'content')}>
-            {shuffledCases.map((caseItem) => (
-              <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]" data-ui={dataUiPath('cases', 'carousel', 'item', getCaseUiKey(caseItem))}>
+            {shuffledCases.map((caseItem, index) => (
+              <CarouselItem key={caseItem.id} className="pl-4 md:pl-4 basis-[280px] md:basis-[320px]" data-ui={dataUiPath('cases', 'carousel', 'item', index + 1)}>
                 <button
                   type="button"
                   onPointerDown={handleCardPointerDown}
                   onMouseDown={handleCardMouseDown}
                   onClick={(event) => handleCardClick(caseItem, event)}
-                  data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem))}
+                  data-ui={dataUiPath('cases', 'card', caseItem.id)}
                   className="w-full text-left p-5 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all duration-300 group h-full flex flex-col relative cursor-grab active:cursor-grabbing select-none touch-manipulation"
                 >
                   {caseItem.year != null && (
                     <span
                       className="absolute top-0 right-0 z-10 text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium"
-                      data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'year')}
+                      data-ui={dataUiPath('cases', 'card', caseItem.id, 'year')}
                     >
                       {caseItem.year}
                     </span>
                   )}
-                  <div className="aspect-video w-full rounded-xl bg-secondary/50 border border-border/50 mb-4 flex items-center justify-center relative overflow-hidden" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image')}>
-                    {caseItem.print.startsWith('/') || caseItem.print.startsWith('http') ? (
+                  <div className="aspect-video w-full rounded-xl bg-secondary/50 border border-border/50 mb-4 flex items-center justify-center relative overflow-hidden" data-ui={dataUiPath('cases', 'card', caseItem.id, 'media')}>
+                    {hasRenderableImage(caseItem.src) ? (
                       <img
-                        src={caseItem.print}
+                        src={caseItem.src}
                         alt=""
                         draggable={false}
-                        data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image', 'asset')}
+                        data-ui={dataUiPath('cases', 'card', caseItem.id, 'media', 'asset')}
                         className={`w-full h-full object-cover ${
                           caseItem.imagePosition === 'bottom'
                             ? 'object-bottom'
@@ -608,29 +564,29 @@ const Cases = () => {
                         } transition-transform duration-300 ease-out group-hover:scale-105`}
                       />
                     ) : (
-                      <span className="text-xs text-muted-foreground">{caseItem.print}</span>
+                      <span className="text-xs text-muted-foreground">{caseItem.src}</span>
                     )}
-                    <div className="absolute bottom-2 right-2 w-7 h-7 rounded-lg bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:scale-110" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'image', 'badge')}>
+                    <div className="absolute bottom-2 right-2 w-7 h-7 rounded-lg bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all group-hover:scale-110" data-ui={dataUiPath('cases', 'card', caseItem.id, 'media', 'badge')}>
                       <ArrowUpRight className="w-3.5 h-3.5 text-primary" />
                     </div>
                   </div>
                   
                   {/* Tags */}
-                  <div className="flex gap-2 mb-3" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'tags')}>
+                  <div className="flex gap-2 mb-3" data-ui={dataUiPath('cases', 'card', caseItem.id, 'tags')}>
                     {caseItem.tags.map((tag, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'tag', i + 1)}>
+                      <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium" data-ui={dataUiPath('cases', 'card', caseItem.id, 'tag', i + 1)}>
                         {tag}
                       </span>
                     ))}
                   </div>
                   
                   {/* Title */}
-                  <h3 className="text-sm font-medium text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 whitespace-pre-line" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'title')}>
+                  <h3 className="text-sm font-medium text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 whitespace-pre-line" data-ui={dataUiPath('cases', 'card', caseItem.id, 'title')}>
                     {caseItem.title}
                   </h3>
                   
                   {/* Impact */}
-                  <p className="text-xs text-muted-foreground leading-relaxed" data-ui={dataUiPath('cases', 'card', getCaseUiKey(caseItem), 'impact')}>
+                  <p className="text-xs text-muted-foreground leading-relaxed" data-ui={dataUiPath('cases', 'card', caseItem.id, 'impact')}>
                     {caseItem.impact}
                   </p>
                 </button>
@@ -662,10 +618,10 @@ const Cases = () => {
         <DialogContent className="max-w-2xl w-[calc(100vw-2rem)] sm:w-full max-h-[90vh] flex flex-col p-0 gap-0 bg-card border-border overflow-hidden" data-ui={dataUiPath('cases', 'modal')}>
           {selectedCase && (
             <>
-              {(selectedCase.print.startsWith('/') || selectedCase.print.startsWith('http')) && (
+              {hasRenderableImage(selectedCase.src) && (
                 <div className="w-full flex-shrink-0 overflow-hidden rounded-t-lg" data-ui={dataUiPath('cases', 'modal', 'image')}>
                   <img
-                    src={selectedCase.print}
+                    src={selectedCase.src}
                     alt=""
                     data-ui={dataUiPath('cases', 'modal', 'image', 'asset')}
                     className={`w-full object-cover ${

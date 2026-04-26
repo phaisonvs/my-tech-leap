@@ -603,18 +603,14 @@ const Hero = () => {
           >
             Formalização da atuação{"\u00A0"}como
             <br />
-            <span className="text-primary">
-              Coordenador de{" "}
-              <br className="md:hidden" />
-              <span className="whitespace-nowrap">CRO &amp; UX</span>
-            </span>
+            <span className="text-primary">Coordenador de CRO &amp; UX</span>
           </h1>
           <p
             className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words"
             data-ui="hero.subtitle"
           >
-            Um reconhecimento ao escopo que já assumo, CRO: UX/UI, front-end,
-            tracking e integrações.
+            Um reconhecimento ao escopo que já assumo, conectando UX/UI, CRO,
+            front-end, tracking e integrações.
           </p>
         </div>
 

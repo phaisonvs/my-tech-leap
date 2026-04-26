@@ -2,12 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import mysaLogo from '@/assets/mysa-logo.png';
 const navLinks = [
-  { href: '#tldr', label: 'TL;DR', uiKey: 'tldr' },
+  { href: '#tldr', label: 'Além de UX', uiKey: 'tldr' },
   { href: '#cases', label: 'Cases', uiKey: 'cases' },
-  { href: '#desafio', label: 'Desafio', uiKey: 'desafio' },
-  { href: '#escopo', label: 'Escopo', uiKey: 'escopo' },
+  { href: '#escopo', label: 'Objetivos', uiKey: 'escopo' },
   { href: '#evolucao', label: 'Evolução', uiKey: 'evolucao' },
-  { href: '#pedido', label: 'Pedido', uiKey: 'pedido' },
+  { href: '#pedido', label: 'O que peço', uiKey: 'pedido' },
 ];
 
 const MENU_TRANSITION_DURATION = 450;

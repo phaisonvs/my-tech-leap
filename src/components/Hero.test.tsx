@@ -31,8 +31,8 @@ describe("Hero", () => {
     const introLead = introText?.querySelector("strong");
 
     expect(title).toHaveTextContent("Formalização da atuação");
-    expect(title).toHaveTextContent("Tech Lead de CRO");
-    expect(subtitle).toHaveTextContent("Lidero na prática");
+    expect(title).toHaveTextContent("Coordenador de CRO");
+    expect(subtitle).toHaveTextContent("CRO: UX/UI");
     expect(introText).toHaveTextContent("Interaja com os cards!");
     expect(introLead).toHaveTextContent("Interaja com os cards!");
   });

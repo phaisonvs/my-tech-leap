@@ -1,22 +1,22 @@
-import { Briefcase, Code2, RefreshCw } from 'lucide-react';
+import { Layers, Code2, TrendingUp } from 'lucide-react';
 import { useInView } from '@/hooks/use-in-view';
 import { toUiKey } from '@/lib/data-ui';
 
 const cards = [
   {
-    icon: Briefcase,
-    title: 'Desafios além do cargo',
-    text: 'Há 3 anos e meio atuo além do escopo de UI/UX para conduzir as entregas e destravar temas críticos da operação.',
+    icon: Layers,
+    title: 'Além de UX',
+    text: 'Meu escopo deixou de se limitar a UX e passou a exigir execução direta entre experiência, produto, tecnologia e operação.',
   },
   {
     icon: Code2,
-    title: 'Execução técnica (front-end + integrações)',
-    text: 'Assumo frentes técnicas para remover dependências, viabilizar integrações e garantir a entrega nos devidos prazos.',
+    title: 'CRO técnico aplicado',
+    text: 'Na prática, isso envolve front-end, back-end, APIs, tracking, integrações e sustentação técnica para evoluir funis digitais.',
   },
   {
-    icon: RefreshCw,
-    title: 'Sustentação e evolução do funil',
-    text: 'Mantenho atuação contínua na sustentação do funil, destravando correções e evoluções com foco em resultado.',
+    icon: TrendingUp,
+    title: 'Aceleração do funil',
+    text: 'Minha atuação destrava frentes críticas e acelera evoluções que impactam jornada, conversão, operação e receita.',
   },
 ];
 
@@ -28,14 +28,14 @@ const TLDR = () => {
       <div 
         ref={ref as React.RefObject<HTMLDivElement>}
         data-ui="tldr.content"
-        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+        className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
           isVisible 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
       >
         <h2 className="text-lg font-semibold text-foreground mb-6" data-ui="tldr.title">
-          Atuação no dia a dia
+          Escopo real da minha atuação além de UX
         </h2>
 
         <div className="grid md:grid-cols-3 gap-4" data-ui="tldr.cards">

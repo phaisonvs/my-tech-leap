@@ -7,22 +7,22 @@ const formalizations = [
   {
     icon: FileText,
     title: 'Título oficial',
-    text: 'Tech Lead de CRO',
+    text: 'Coordenador de CRO & UX.',
   },
   {
     icon: Target,
-    title: 'Escopo documentado',
-    text: 'O que eu decido e o que eu não decido — claro e sustentável.',
+    title: 'Escopo reconhecido',
+    text: 'CRO, UX/UI, front-end, tracking, integrações e sustentação técnica.',
   },
   {
     icon: Users,
-    title: 'Alinhamento de senioridade',
-    text: 'Expectativa de nível e caminho de evolução definido.',
+    title: 'Senioridade alinhada',
+    text: 'Reconhecimento compatível com a responsabilidade já assumida.',
   },
   {
-    icon: TrendingUp,
-    title: 'Checkpoint de ajuste',
-    text: 'Revisão curta na sustentação pra calibrar qualquer detalhe.',
+    icon: ArrowRight,
+    title: 'Próximo passo',
+    text: 'Definição do cargo, escopo e plano de evolução.',
   },
 ];
 
@@ -30,23 +30,23 @@ const paths = [
   {
     id: 'A',
     icon: CheckCircle2,
-    title: 'Decidir e formalizar agora',
-    description: 'A gente define título, escopo e senioridade hoje. Nos próximos 30 dias a gente ajusta qualquer detalhe que surgir.',
+    title: 'Formalização imediata',
+    description: 'Definir cargo, escopo e senioridade agora, com ajustes operacionais conforme necessário.',
     bullets: [
-      'Título oficial: Tech Lead de CRO.',
-      'Escopo documentado.',
-      'Alinhamento de expectativa de nível.',
+      'Coordenador de CRO & UX como título oficial.',
+      'Escopo documentado e alinhado.',
+      'Reconhecimento da senioridade exercida.',
     ],
   },
   {
     id: 'B',
     icon: Calendar,
-    title: 'Decidir agora, efetivar na virada',
-    description: 'A gente toma a decisão hoje, mas a formalização acontece quando o projeto atual entrar em sustentação.',
+    title: 'Formalização na transição',
+    description: 'Decisão tomada agora, efetivação quando o projeto atual entrar em sustentação.',
     bullets: [
-      'Decisão registrada agora.',
-      'Efetivação na virada do projeto.',
-      'Transição natural pro novo escopo.',
+      'Acordo registrado imediatamente.',
+      'Implementação na virada operacional.',
+      'Continuidade natural do escopo.',
     ],
   },
 ];
@@ -71,12 +71,10 @@ const Request = () => {
         <div className="text-center mb-14" data-ui="request.header">
           <h2 className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-primary/10 border border-primary/20 text-lg md:text-xl font-semibold text-primary mb-6" data-ui="request.title">
             <Target className="w-5 h-5" />
-            O que eu estou pedindo
+            Formalização proposta
           </h2>
           <p className="text-sm text-muted-foreground max-w-xl mx-auto" data-ui="request.subtitle">
-            Formalizar título, escopo e expectativa de senioridade.{' '}
-            <span className="text-foreground font-medium">Sem mais 90 dias pra provar.</span>{' '}
-            <span className="text-primary">Já são quase 4 anos.</span>
+            A proposta é alinhar cargo, escopo e expectativa ao papel que já exerço na prática.
           </p>
         </div>
 
@@ -169,9 +167,9 @@ const Request = () => {
 
         {/* Final message */}
         <div className="mt-10 text-center" data-ui="request.footer">
-          <p className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-card border border-border text-sm text-foreground" data-ui="request.footer.message">
-            <MessageSquare className="w-5 h-5 text-muted-foreground animate-float" />
-            Meu objetivo é deixar esse papel claro e sustentável — pra empresa e pra mim.
+          <p className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-card border border-border text-sm text-foreground leading-relaxed max-w-3xl" data-ui="request.footer.message">
+            <MessageSquare className="w-5 h-5 text-muted-foreground animate-float flex-shrink-0" />
+            Minha proposta é formalizar a atuação como Coordenador de CRO &amp; UX, com escopo claro, senioridade alinhada e próximos passos definidos junto à diretoria.
           </p>
         </div>
       </div>

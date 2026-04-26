@@ -16,9 +16,9 @@ const Index = () => {
       <main data-ui="page.home.main">
         <Hero />
         <TLDR />
-        <Cases />
-        <Scope />
         <Evolution />
+        <Scope />
+        <Cases />
         <Request />
       </main>
       <Footer />

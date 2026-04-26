@@ -313,29 +313,3 @@ All colors MUST be HSL.
     mask-image: none;
   }
 }
-
-@keyframes scroll-wheel {
-  0%,
-  22% {
-    transform: translateY(0);
-  }
-
-  40% {
-    transform: translateY(6.8px);
-  }
-
-  62%,
-  72% {
-    transform: translateY(8.2px);
-  }
-
-  90%,
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animate-scroll-wheel {
-  animation: scroll-wheel 2.1s cubic-bezier(0.18, 0.95, 0.3, 1) infinite;
-  transform-origin: center;
-}

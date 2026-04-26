@@ -98,23 +98,51 @@ All colors MUST be HSL.
 
 /* Floating animation */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 @keyframes icon-bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.3); }
-  50% { box-shadow: 0 0 20px 4px hsl(var(--primary) / 0.15); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 4px hsl(var(--primary) / 0.15);
+  }
 }
 
 .animate-float {
@@ -134,10 +162,23 @@ All colors MUST be HSL.
 }
 
 @keyframes drum-hint-float {
-  0%, 100% { transform: translateY(0); }
-  25% { transform: translateY(-5px); }
-  50% { transform: translateY(0); }
-  75% { transform: translateY(5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-5px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  75% {
+    transform: translateY(5px);
+  }
 }
 
 .animate-drum-hint-float {
@@ -145,8 +186,15 @@ All colors MUST be HSL.
 }
 
 @keyframes arrow-hint-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
 }
 
 .animate-arrow-hint-pulse {
@@ -154,8 +202,15 @@ All colors MUST be HSL.
 }
 
 @keyframes arrow-float-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .animate-arrow-float-subtle {
@@ -163,14 +218,79 @@ All colors MUST be HSL.
 }
 
 @keyframes value-count-pop {
-  0% { transform: scale(1); }
-  35% { transform: scale(1.22); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.35);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-value-count-pop {
-  transform-origin: bottom left;
-  animation: value-count-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: center;
+  animation: value-count-pop 0.7s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+@keyframes icon-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: scale(1.25) rotate(24deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-icon-pop {
+  transform-origin: center;
+  animation: icon-pop 0.45s ease-out forwards;
+}
+
+.icon-hover-effect {
+  transition: transform 0.45s ease-out;
+}
+
+.group:hover .icon-hover-effect {
+  transform: scale(1.25) rotate(24deg);
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-fade-in {
+  animation: modal-fade-in 0.2s ease-out forwards;
+}
+
+.animate-modal-scale-in {
+  animation: modal-scale-in 0.25s ease-out forwards;
 }
 
 .scrollbar-hide {
@@ -180,4 +300,36 @@ All colors MUST be HSL.
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.cases-carousel-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.12) 3%, rgba(0, 0, 0, 0.35) 8%, rgba(0, 0, 0, 0.65) 14%, black 18%, black 82%, rgba(0, 0, 0, 0.65) 86%, rgba(0, 0, 0, 0.35) 92%, rgba(0, 0, 0, 0.12) 97%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.12) 3%, rgba(0, 0, 0, 0.35) 8%, rgba(0, 0, 0, 0.65) 14%, black 18%, black 82%, rgba(0, 0, 0, 0.65) 86%, rgba(0, 0, 0, 0.35) 92%, rgba(0, 0, 0, 0.12) 97%, transparent 100%);
+}
+
+@media (max-width: 767px) {
+  .cases-carousel-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* Mouse scroll wheel animation */
+@keyframes scroll-wheel {
+
+  0%,
+  100% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(2px);
+    opacity: 0.7;
+  }
+}
+
+.animate-scroll-wheel {
+  animation: scroll-wheel 1.5s ease-in-out infinite;
+  transform-origin: center;
 }

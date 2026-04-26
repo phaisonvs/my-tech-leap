@@ -528,10 +528,10 @@ const Cases = () => {
         <div className="flex items-end justify-between mb-6 md:mb-4" data-ui="cases.header">
           <div data-ui="cases.header.copy">
             <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2" data-ui="cases.title">
-              Cases entregues (evidências)
+              Cases entregues como evidência
             </h2>
             <p className="text-sm text-muted-foreground" data-ui="cases.subtitle">
-              Passe pro lado. Cada card traz um resumo; ao abrir, você vê problema, execução, resultado e evidências.
+              Entregas que demonstram o escopo já assumido entre CRO, UX/UI, tecnologia, sustentação e evolução dos canais digitais.
             </p>
           </div>
           

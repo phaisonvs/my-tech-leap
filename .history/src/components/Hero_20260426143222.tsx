@@ -1,4 +1,5 @@
 import {
+  MessageCircle,
   Plug,
   Shield,
   BarChart3,
@@ -13,7 +14,6 @@ import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import MouseScroll from "@/components/icons/MouseScroll";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
@@ -70,7 +70,7 @@ const getStatUiKey = (_stat: StatItem, index: number) =>
 
 const stats: StatItem[] = [
   {
-    icon: MouseScroll as unknown as LucideIcon,
+    icon: MessageCircle,
     title: "",
     isIntro: true,
     introText: (

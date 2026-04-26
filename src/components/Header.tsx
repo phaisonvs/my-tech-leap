@@ -3,10 +3,10 @@ import { Menu, X } from 'lucide-react';
 import mysaLogo from '@/assets/mysa-logo.png';
 const navLinks = [
   { href: '#tldr', label: 'Além de UX', uiKey: 'tldr' },
-  { href: '#cases', label: 'Cases', uiKey: 'cases' },
-  { href: '#escopo', label: 'Objetivos', uiKey: 'escopo' },
   { href: '#evolucao', label: 'Evolução', uiKey: 'evolucao' },
-  { href: '#pedido', label: 'O que peço', uiKey: 'pedido' },
+  { href: '#escopo', label: 'Objetivos', uiKey: 'escopo' },
+  { href: '#cases', label: 'Evidências', uiKey: 'cases' },
+  { href: '#pedido', label: 'Proposta', uiKey: 'pedido' },
 ];
 
 const MENU_TRANSITION_DURATION = 450;

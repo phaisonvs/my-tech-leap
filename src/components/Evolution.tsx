@@ -1,28 +1,28 @@
 import { useState, useEffect } from 'react';
-import { Code, Database, Eye, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Eye, Code, Wrench, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useInView } from '@/hooks/use-in-view';
 import { toUiKey } from '@/lib/data-ui';
 
 const steps = [
   {
-    icon: Code,
-    title: 'Contratos de API',
-    text: 'Entender melhor contratos de API (payload, erros, validações).',
-  },
-  {
-    icon: Database,
-    title: 'Ajustes menores',
-    text: 'Pegar ajustes menores (endpoints simples, validações, logs).',
-  },
-  {
     icon: Eye,
-    title: 'Observabilidade',
-    text: 'Evoluir em observabilidade (monitorar falhas que afetam a jornada).',
+    title: 'CRO e experiência',
+    text: 'Identificação de fricções, oportunidades e melhorias nas jornadas digitais.',
+  },
+  {
+    icon: Code,
+    title: 'Execução técnica',
+    text: 'Implementação front-end, apoio em back-end, APIs, tracking e integrações.',
+  },
+  {
+    icon: Wrench,
+    title: 'Sustentação',
+    text: 'Acompanhamento de erros, ajustes operacionais e continuidade das entregas.',
   },
   {
     icon: TrendingUp,
-    title: 'Ownership gradual',
-    text: 'Aumentar ownership gradualmente conforme maturidade e necessidade.',
+    title: 'Evolução do funil',
+    text: 'Priorização de melhorias com impacto em jornada, conversão e operação.',
   },
 ];
 
@@ -47,18 +47,18 @@ const Evolution = () => {
       <div 
         ref={ref as React.RefObject<HTMLDivElement>}
         data-ui="evolution.content"
-        className={`container mx-auto max-w-4xl transition-all duration-700 ease-out ${
+        className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
           isVisible 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-8'
         }`}
       >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4" data-ui="evolution.title">
-          Minha evolução natural: começar a pegar mais backend
+          Evolução natural da atuação
         </h2>
         
         <p className="text-sm text-muted-foreground mb-12 max-w-3xl leading-relaxed" data-ui="evolution.subtitle">
-          Hoje eu encosto em API de forma indireta, porque meu foco principal é experiência e front. Mesmo assim, eu tenho interesse real em evoluir tecnicamente e começar a assumir partes de backend aos poucos — com responsabilidade.
+          Minha atuação passou a absorver camadas técnicas porque muitas evoluções de CRO dependem de execução, integração, tracking e sustentação para sair do papel.
         </p>
 
         {/* Timeline navigation */}

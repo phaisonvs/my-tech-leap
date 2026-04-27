@@ -1,28 +1,66 @@
 import { useState, useEffect } from 'react';
-import { Eye, Code, Wrench, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Palette, Monitor, Eye, Code, Users, Target, ChevronLeft, ChevronRight, Zap, Layers, BarChart3, ShieldCheck } from 'lucide-react';
 import { useInView } from '@/hooks/use-in-view';
 import { toUiKey } from '@/lib/data-ui';
 
 const steps = [
   {
+    icon: Palette,
+    title: 'Design e comunicação',
+    text: 'Base inicial em design gráfico, campanhas e comunicação visual, com foco em clareza, marca e entrega.',
+  },
+  {
+    icon: Monitor,
+    title: 'UX/UI e experiência',
+    text: 'Evolução para interfaces, jornadas, protótipos e decisões de experiência aplicadas aos canais digitais.',
+  },
+  {
     icon: Eye,
-    title: 'CRO e experiência',
-    text: 'Identificação de fricções, oportunidades e melhorias nas jornadas digitais.',
+    title: 'CRO e funil',
+    text: 'Identificação de fricções, hipóteses e oportunidades para melhorar jornada, conversão e performance digital.',
   },
   {
     icon: Code,
     title: 'Execução técnica',
-    text: 'Implementação front-end, apoio em back-end, APIs, tracking e integrações.',
+    text: 'Atuação direta em front-end, back-end, APIs, tracking, integrações e sustentação para tirar evoluções do papel.',
   },
   {
-    icon: Wrench,
-    title: 'Sustentação',
-    text: 'Acompanhamento de erros, ajustes operacionais e continuidade das entregas.',
+    icon: Users,
+    title: 'Coordenação de frentes',
+    text: 'Alinhamento entre áreas, parceiros e prioridades para destravar entregas e acelerar evolução dos produtos MYSA.',
   },
   {
-    icon: TrendingUp,
-    title: 'Evolução do funil',
-    text: 'Priorização de melhorias com impacto em jornada, conversão e operação.',
+    icon: Target,
+    title: 'Objetivo atual',
+    text: 'Formalizar a atuação como Coordenador de CRO & UX, conectando escopo, responsabilidade e próximos passos.',
+  },
+];
+
+const objectives = [
+  {
+    icon: ShieldCheck,
+    title: 'Clareza de escopo',
+    text: 'Definir oficialmente o papel que já exerço entre CRO, UX/UI, tecnologia e sustentação.',
+  },
+  {
+    icon: Zap,
+    title: 'Velocidade de entrega',
+    text: 'Reduzir dependências e destravar frentes críticas que impactam os funis digitais.',
+  },
+  {
+    icon: Target,
+    title: 'Prioridade estratégica',
+    text: 'Organizar a régua de CRO com foco em jornada, conversão, operação e receita.',
+  },
+  {
+    icon: Layers,
+    title: 'Qualidade e consistência',
+    text: 'Padronizar decisões de UX/UI, tracking, front-end e sustentação das jornadas.',
+  },
+  {
+    icon: BarChart3,
+    title: 'Dados e evolução contínua',
+    text: 'Usar eventos, KPIs e comportamento para orientar melhorias nos produtos MYSA.',
   },
 ];
 
@@ -54,11 +92,11 @@ const Evolution = () => {
         }`}
       >
         <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-4" data-ui="evolution.title">
-          Evolução natural da atuação
+          Evolução da atuação até CRO &amp; UX
         </h2>
         
         <p className="text-sm text-muted-foreground mb-12 max-w-3xl leading-relaxed" data-ui="evolution.subtitle">
-          Minha atuação passou a absorver camadas técnicas porque muitas evoluções de CRO dependem de execução, integração, tracking e sustentação para sair do papel.
+          Minha atuação evoluiu de design e experiência para uma frente mais ampla, conectando CRO, execução técnica, sustentação e objetivos claros para os funis digitais da MYSA.
         </p>
 
         {/* Timeline navigation */}
@@ -124,7 +162,7 @@ const Evolution = () => {
         </div>
 
         {/* Navigation arrows */}
-        <div className="flex justify-center gap-4 mt-8" data-ui="evolution.controls">
+        <div className="flex justify-center gap-4 mt-8 mb-16" data-ui="evolution.controls">
           <button 
             onClick={() => goToStep((activeStep - 1 + steps.length) % steps.length)}
             data-ui="evolution.controls.prev"
@@ -153,6 +191,33 @@ const Evolution = () => {
           >
             <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
           </button>
+        </div>
+
+        {/* Objetivos práticos da formalização */}
+        <div className="mt-12 pt-12 border-t border-border" data-ui="evolution.objectives">
+          <h3 className="text-base font-medium text-foreground mb-6" data-ui="evolution.objectives.title">
+            Objetivos práticos da formalização
+          </h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4" data-ui="evolution.objectives.grid">
+            {objectives.map((obj, index) => (
+              <div
+                key={index}
+                data-ui={`evolution.objective.${toUiKey(obj.title)}`}
+                className={`p-4 rounded-xl bg-card/50 border border-border hover:border-primary/30 transition-all duration-700 ease-out group ${
+                  isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: isVisible ? `${(index + 6) * 100}ms` : '0ms' }}
+              >
+                <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-all">
+                  <obj.icon className="w-4 h-4 text-primary icon-hover-effect" />
+                </div>
+                <h4 className="text-xs font-medium text-foreground mb-1.5">{obj.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{obj.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

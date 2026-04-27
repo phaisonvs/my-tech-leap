@@ -2,7 +2,6 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import TLDR from '@/components/TLDR';
 import Cases from '@/components/Cases';
-import Scope from '@/components/Scope';
 import Evolution from '@/components/Evolution';
 import Request from '@/components/Request';
 import Footer from '@/components/Footer';
@@ -17,7 +16,6 @@ const Index = () => {
         <Hero />
         <TLDR />
         <Evolution />
-        <Scope />
         <Cases />
         <Request />
       </main>

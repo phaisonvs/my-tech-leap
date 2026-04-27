@@ -4,7 +4,6 @@ import mysaLogo from '@/assets/mysa-logo.png';
 const navLinks = [
   { href: '#tldr', label: 'Além de UX', uiKey: 'tldr' },
   { href: '#evolucao', label: 'Evolução', uiKey: 'evolucao' },
-  { href: '#escopo', label: 'Objetivos', uiKey: 'escopo' },
   { href: '#cases', label: 'Evidências', uiKey: 'cases' },
   { href: '#pedido', label: 'Proposta', uiKey: 'pedido' },
 ];

@@ -37,7 +37,7 @@ const Request = () => {
                 Avaliação e aprovação de decisão
               </h2>
             </div>
-            <p className="sr-only" data-ui="request.subtitle">
+            <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed" data-ui="request.subtitle">
               Formalizar em até 60 dias o cargo de Coordenador de CRO &amp; UX, com escopo, senioridade e remuneração alinhados à atuação já exercida.
             </p>
           </div>

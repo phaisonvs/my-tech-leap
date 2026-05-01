@@ -9,7 +9,7 @@ const decisionItems = [
   },
   {
     title: 'Escopo',
-    description: 'Validação do papel que já exerço na condução técnica e estratégica das frentes digitais.',
+    description: 'Validação formal da gestão técnica e do headcount já exercidos entre CRO, UX/UI, front-end, back-end, tracking, integrações, sustentação e evolução dos funis digitais.',
   },
   {
     title: 'Remuneração',
@@ -37,7 +37,7 @@ const Request = () => {
                 Avaliação e aprovação de decisão
               </h2>
             </div>
-            <p className="sr-only" data-ui="request.subtitle">
+            <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed" data-ui="request.subtitle">
               Formalizar em até 60 dias o cargo de Coordenador de CRO &amp; UX, com escopo, senioridade e remuneração alinhados à atuação já exercida.
             </p>
           </div>
@@ -55,7 +55,7 @@ const Request = () => {
             </span>
           </div>
           <p className="max-w-3xl text-sm md:text-base font-normal leading-relaxed text-foreground">
-            Gestão técnica e coordenação de frentes de CRO, UX/UI, front-end, back-end, tracking, integrações, sustentação e evolução dos funis digitais.
+            Gestão técnica e coordenação de frentes de CRO, UX/UI, execução técnica, tracking, integrações, sustentação e evolução dos funis digitais.
           </p>
         </div>
 

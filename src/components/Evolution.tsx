@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Palette,
   Megaphone,
@@ -8,8 +8,6 @@ import {
   Users,
   Target,
   Rocket,
-  ChevronLeft,
-  ChevronRight,
   Check,
 } from 'lucide-react';
 import { useInView } from '@/hooks/use-in-view';
@@ -64,6 +62,14 @@ const Evolution = () => {
   const [activeStep, setActiveStep] = useState(CURRENT_STEP);
   const [isAnimating, setIsAnimating] = useState(false);
   const { ref, isVisible } = useInView();
+  const wasVisibleRef = useRef(false);
+
+  useEffect(() => {
+    if (isVisible && !wasVisibleRef.current) {
+      setActiveStep(CURRENT_STEP);
+    }
+    wasVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   const goToStep = (index: number) => {
     if (isAnimating || index === activeStep) return;
@@ -77,9 +83,13 @@ const Evolution = () => {
   }, [activeStep]);
 
   return (
-    <section id="evolucao" className="py-24 px-4 md:px-6 scroll-mt-24" data-ui="evolution.root">
+    <section
+      id="evolucao"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 px-4 md:px-6 scroll-mt-24"
+      data-ui="evolution.root"
+    >
       <div
-        ref={ref as React.RefObject<HTMLDivElement>}
         data-ui="evolution.content"
         className={`container mx-auto max-w-5xl transition-all duration-700 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -116,11 +126,15 @@ const Evolution = () => {
                       active
                         ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
                         : doneBeforeCurrent
-                        ? 'border border-sky-500/12 bg-sky-500/[0.055] hover:border-sky-400/22'
+                        ? 'border border-primary/38 bg-background hover:border-primary/55'
                         : 'border border-border bg-card hover:border-primary/50'
                     }`}
                   >
-                    <step.icon className="h-3.5 w-3.5 md:h-4 md:w-4 icon-hover-effect" />
+                    <step.icon
+                      className={`h-3.5 w-3.5 md:h-4 md:w-4 icon-hover-effect ${
+                        active ? '' : doneBeforeCurrent ? 'text-primary/45' : ''
+                      }`}
+                    />
                   </div>
                   <span className={`hidden max-w-[4.5rem] text-[9px] leading-tight transition-all duration-300 sm:block md:max-w-[5.5rem] sm:text-[10px] md:text-[11px] text-center ${
                     active ? 'font-medium text-primary' : 'text-muted-foreground'
@@ -134,7 +148,6 @@ const Evolution = () => {
           </div>
         </div>
 
-        {/* Active step card + controls integrados */}
         <div className="relative overflow-hidden min-h-[180px]" data-ui="evolution.panel">
           <div
             className={`rounded-xl bg-card border border-primary/20 transition-all duration-400 ${
@@ -175,42 +188,6 @@ const Evolution = () => {
                   {steps[activeStep].text}
                 </p>
               </div>
-            </div>
-
-            {/* Controls dentro do card */}
-            <div className="flex items-center justify-between px-4 pb-3 pt-1 border-t border-border/50" data-ui="evolution.controls">
-              <button
-                onClick={() => goToStep((activeStep - 1 + steps.length) % steps.length)}
-                data-ui="evolution.controls.prev"
-                className="p-2 rounded-lg hover:bg-primary/10 transition-all group"
-              >
-                <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              </button>
-
-              <div className="flex items-center gap-1.5" data-ui="evolution.controls.dots">
-                {steps.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => goToStep(i)}
-                    data-ui={`evolution.controls.dot.${i + 1}`}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === activeStep
-                        ? 'bg-primary w-4'
-                        : i < CURRENT_STEP
-                        ? 'bg-primary/30 w-1.5'
-                        : 'bg-muted-foreground/20 w-1.5 hover:bg-muted-foreground/40'
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={() => goToStep((activeStep + 1) % steps.length)}
-                data-ui="evolution.controls.next"
-                className="p-2 rounded-lg hover:bg-primary/10 transition-all group"
-              >
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              </button>
             </div>
           </div>
         </div>

@@ -3,16 +3,13 @@ import {
   Shield,
   BarChart3,
   Layout,
-  Calendar,
-  Truck,
-  CreditCard,
-  GitBranch,
   TrendingUp,
   ChevronDown,
   Info,
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { CASES_CARD_COUNT } from "@/components/Cases";
 import MouseScroll from "@/components/icons/MouseScroll";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
@@ -26,9 +23,8 @@ const COUNT_UP_DELAY_MS = 200;
 
 interface PopupContent {
   title: string;
-  oQueMede: string;
-  comoLer: string;
-  porQueImporta: string;
+  summary: string;
+  deliveries: string[];
 }
 
 interface StatItemIntro {
@@ -56,13 +52,9 @@ const heroStatUiKeys = [
   "intro",
   "integracoes-entregues",
   "sustentacao-operacional",
-  "base-cro-e-mensuracao",
+  "base-tecnica-para-cro",
   "jornadas-e-lps-publicadas",
-  "rotina-de-cro-cadencia",
-  "saude-do-frete",
-  "saude-do-pagamento",
-  "evolucao-continua-releases",
-  "cro-no-funil-de-franquia-venda",
+  "evolucao-continua",
 ] as const;
 
 const getStatUiKey = (_stat: StatItem, index: number) =>
@@ -85,18 +77,21 @@ const stats: StatItem[] = [
   },
   {
     icon: Plug,
-    title: "01 — Integrações entregues",
-    valueTargets: [18],
+    title: "01 — Entregas integradas",
+    valueTargets: [CASES_CARD_COUNT],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "entregas de integração (UI/UX + front + regra de negócio)",
+    supportLine:
+      "entregas conectando UX/UI, front-end, back-end, regra de negócio e operação.",
     popup: {
-      title: "Integrações entregues",
-      oQueMede:
-        "Volume de integrações e entregas técnicas implementadas e publicadas em produção.",
-      comoLer:
-        "Total acumulado de entregas com aplicação real em jornada e operação (não inclui apenas protótipo ou ajuste visual isolado).",
-      porQueImporta:
-        "Evidencia atuação híbrida ponta a ponta, conectando experiência, front-end e operação.",
+      title: "Entregas integradas",
+      summary:
+        "Atuo em entregas que exigem conexão entre experiência, tecnologia, regra de negócio e operação.",
+      deliveries: [
+        "Transformo necessidades do negócio em jornadas publicadas: LPs, campanhas, páginas e fluxos de captação.",
+        "Implemento frentes que envolvem autenticação, checkout, cupons, navegação, tracking, WhatsApp e leads.",
+        "Conecto UX/UI, front-end, back-end e integrações para tirar soluções do papel com mais autonomia.",
+        "Acompanho da definição da solução ao go-live, validação e ajustes pós-publicação.",
+      ],
     },
   },
   {
@@ -105,31 +100,36 @@ const stats: StatItem[] = [
     valueTargets: [7],
     valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "frentes/fluxos críticos com sustentação operacional recorrente",
+      "frentes críticas com atuação recorrente em front-end, back-end, APIs e tracking.",
     popup: {
       title: "Sustentação operacional",
-      oQueMede:
-        "Cobertura de sustentação sobre frentes e fluxos críticos (correções, ajustes, acompanhamento e estabilidade operacional).",
-      comoLer:
-        "Pode ser apresentado em quantidade de frentes/fluxos acompanhados ou percentual de cobertura, conforme a base disponível.",
-      porQueImporta:
-        "Mostra continuidade de operação, redução de risco e manutenção da performance além de novas entregas.",
+      summary:
+        "Na prática, assumo sustentação técnica de fluxos críticos em produção, conectando front-end, back-end, APIs, tracking e integrações.",
+      deliveries: [
+        "Implemento interfaces, validações, estados de tela e comportamentos responsivos.",
+        "Evoluo fluxos de back-end, campos, autenticação, integrações e envio de dados.",
+        "Sustento jornadas de login, checkout, leads, formulários, e-mails e fluxos Prime.",
+        "Valido dataLayer, eventos e comportamento ponta a ponta em produção.",
+      ],
     },
   },
   {
     icon: BarChart3,
-    title: "03 — Base de CRO e mensuração",
-    valueTargets: [24],
-    valueFormat: (v) => `${Math.round(v[0])}`,
-    supportLine: "eventos críticos validados no funil (E2E)",
+    title: "03 — Base técnica para CRO",
+    valueTargets: [50],
+    valueFormat: (v) => `+${Math.round(v[0])}`,
+    supportLine:
+      "eventos de funil revisados para melhorar tracking, jornada e mensuração.",
     popup: {
-      title: "Base de CRO e mensuração",
-      oQueMede:
-        "Maturidade da base de conversão via instrumentação, validação de eventos e acompanhamento do funil ponta a ponta.",
-      comoLer:
-        "Considera eventos críticos validados nas etapas do funil (PDP → Carrinho → Checkout → Pedido), com foco em consistência de mensuração.",
-      porQueImporta:
-        "Demonstra que conversão está sendo tratada com método (dados + rotina), e não apenas por percepção.",
+      title: "Base técnica para CRO",
+      summary:
+        "Atuo diretamente na mensuração dos funis para transformar comportamento do usuário em decisão prática de CRO.",
+      deliveries: [
+        "Reviso eventos em login, checkout, formulários, leads e conversão.",
+        "Ajusto dataLayer, parâmetros, regras de disparo e leitura em analytics.",
+        "Valido a conexão entre interface, implementação e mensuração.",
+        "Uso essa leitura para identificar gargalos e priorizar melhorias.",
+      ],
     },
   },
   {
@@ -137,99 +137,37 @@ const stats: StatItem[] = [
     title: "04 — Jornadas e LPs publicadas",
     valueTargets: [12],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "LPs/hotsites e fluxos de conversão publicados",
+    supportLine:
+      "LPs, hotsites e fluxos publicados em diferentes ambientes digitais.",
     popup: {
       title: "Jornadas e LPs publicadas",
-      oQueMede:
-        "Volume de páginas, LPs/hotsites e fluxos de jornada publicados com objetivo de conversão.",
-      comoLer:
-        "Total de entregas publicadas em produção (captação, login, formulários e jornadas associadas).",
-      porQueImporta:
-        "Evidencia capacidade de transformar demanda em experiência publicada com foco em resultado.",
-    },
-  },
-  {
-    icon: Calendar,
-    title: "05 — Rotina de CRO (cadência)",
-    staticLabel: "Semanal",
-    supportLine:
-      "backlog de hipóteses, priorização e acompanhamento de releases",
-    popup: {
-      title: "Rotina de CRO",
-      oQueMede:
-        "Frequência e consistência da rotina operacional de CRO (hipóteses, acompanhamento, análise e ajustes).",
-      comoLer:
-        "Pode ser apresentado por cadência (semanal/quinzenal) e evoluído depois com volume de hipóteses/releases acompanhados.",
-      porQueImporta:
-        "Mostra operação contínua de melhoria, não apenas entregas pontuais.",
-    },
-  },
-  {
-    icon: Truck,
-    title: "06 — Saúde do frete",
-    valueTargets: [96.2],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "cotação → opção exibida, com monitoramento de falhas",
-    popup: {
-      title: "Saúde do frete",
-      oQueMede:
-        "Taxa de sucesso no fluxo de frete entre cotação e exibição de opções para o usuário.",
-      comoLer:
-        "Percentual de tentativas em que a jornada de frete retorna corretamente opções utilizáveis.",
-      porQueImporta:
-        "Frete é etapa crítica de conversão; falhas aqui impactam abandono e confiança da jornada.",
-    },
-  },
-  {
-    icon: CreditCard,
-    title: "07 — Saúde do pagamento",
-    valueTargets: [91.8],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "tentativa → aprovação, com leitura por método/etapa",
-    popup: {
-      title: "Saúde do pagamento",
-      oQueMede:
-        "Taxa de sucesso da jornada de pagamento entre tentativa e aprovação.",
-      comoLer:
-        "Percentual de transações que avançam corretamente, com análise de erros por método e etapa.",
-      porQueImporta:
-        "Pagamento é etapa final de conversão; monitorar falhas aumenta eficiência comercial e reduz perda de receita.",
-    },
-  },
-  {
-    icon: GitBranch,
-    title: "08 — Evolução contínua (releases)",
-    valueTargets: [14],
-    valueFormat: (v) => `${Math.round(v[0])}`,
-    supportLine:
-      "melhorias/releases acompanhados por impacto em operação e conversão",
-    popup: {
-      title: "Evolução contínua",
-      oQueMede:
-        "Volume de melhorias e releases acompanhados dentro da rotina de evolução da plataforma.",
-      comoLer:
-        "Total de evoluções entregues/acompanhadas em período definido (ex.: ciclo/mês), com leitura por impacto.",
-      porQueImporta:
-        "Reforça previsibilidade de execução e capacidade de sustentar evolução contínua com foco em negócio.",
+      summary:
+        "Atuo em jornadas publicadas em diferentes ambientes, conectando campanha, captação, front-end e operação.",
+      deliveries: [
+        "Publico LPs, hotsites e fluxos em Salesforce, Wake, Sharp e domínios próprios.",
+        "Estruturo formulários, CTAs, WhatsApp, captação de leads e fluxos comerciais.",
+        "Adapto front-end, responsividade e interações conforme cada plataforma.",
+        "Garanto que a jornada esteja pronta para campanha, operação e conversão.",
+      ],
     },
   },
   {
     icon: TrendingUp,
-    title: "09 — CRO no funil de franquia/venda",
-    valueTargets: [5],
-    valueFormat: (v) => `+${Math.round(v[0])}`,
+    title: "05 — Evolução contínua",
+    valueTargets: [14],
+    valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "iniciativas de CRO que impactaram conversão no funil de franquia e venda",
+      "melhorias e releases acompanhados com foco em jornada, operação e conversão.",
     popup: {
-      title: "CRO no funil de franquia/venda",
-      oQueMede:
-        "Iniciativas de CRO (otimização de conversão) aplicadas em jornadas de franquia e venda, com impacto mensurável no funil.",
-      comoLer:
-        "Quantidade de frentes ou melhorias de CRO que impactaram diretamente o funil de captação de franqueados e conversão de vendas.",
-      porQueImporta:
-        "Evidencia atuação de CRO além do e-commerce, com impacto em canais estratégicos de crescimento (franquia e venda direta).",
+      title: "Evolução contínua e CRO",
+      summary:
+        "Atuo na evolução contínua dos canais digitais, conectando ajustes técnicos, CRO e operação comercial.",
+      deliveries: [
+        "Acompanho melhorias em páginas, componentes, fluxos e integrações.",
+        "Aplico CRO em frentes de franquia, venda e captação de leads.",
+        "Estruturo fluxos com WhatsApp, Salesforce, Pipedrive e tracking.",
+        "Sustento ajustes pós-go-live para manter estabilidade e continuidade da jornada.",
+      ],
     },
   },
 ];
@@ -604,8 +542,7 @@ const Hero = () => {
             Formalização da atuação{"\u00A0"}como
             <br />
             <span className="text-primary">
-              Coordenador de{" "}
-              <br className="md:hidden" />
+              Coordenador de <br className="md:hidden" />
               <span className="whitespace-nowrap">CRO &amp; UX</span>
             </span>
           </h1>
@@ -972,28 +909,22 @@ const Hero = () => {
                       className="space-y-4 text-sm text-muted-foreground leading-relaxed"
                       data-ui="hero.modal.body"
                     >
-                      <div
-                        data-ui="hero.modal.body.measure"
+                      <p data-ui="hero.modal.body.summary">{pop.summary}</p>
+                      <ul
+                        className="space-y-2"
+                        data-ui="hero.modal.body.deliveries"
                       >
-                        <span className="font-medium text-foreground">
-                          O que mede:{" "}
-                        </span>
-                        {pop.oQueMede}
-                      </div>
-                      <div
-                        data-ui="hero.modal.body.read"
-                      >
-                        <span className="font-medium text-foreground">
-                          Como ler:{" "}
-                        </span>
-                        {pop.comoLer}
-                      </div>
-                      <div data-ui="hero.modal.body.why">
-                        <span className="font-medium text-foreground">
-                          Por que importa:{" "}
-                        </span>
-                        {pop.porQueImporta}
-                      </div>
+                        {pop.deliveries.map((item, index) => (
+                          <li
+                            key={index}
+                            className="flex gap-2 items-start"
+                            data-ui={`hero.modal.body.deliveries.item.${index + 1}`}
+                          >
+                            <span className="mt-[0.45rem] h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </>
                 );

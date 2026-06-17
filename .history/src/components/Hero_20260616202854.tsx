@@ -1,12 +1,8 @@
 import {
-  MessageCircle,
   Plug,
   Shield,
   BarChart3,
   Layout,
-  Calendar,
-  Truck,
-  CreditCard,
   GitBranch,
   TrendingUp,
   ChevronDown,
@@ -14,9 +10,11 @@ import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { CASES_CARD_COUNT } from "@/components/Cases";
+import MouseScroll from "@/components/icons/MouseScroll";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
-import { dataUiPath } from "@/lib/data-ui";
+import type { ReactNode } from "react";
 
 const easeOutQuad = (t: number) => 1 - (1 - t) * (1 - t);
 const COUNT_UP_DURATION = 2200;
@@ -26,16 +24,15 @@ const COUNT_UP_DELAY_MS = 200;
 
 interface PopupContent {
   title: string;
-  oQueMede: string;
-  comoLer: string;
-  porQueImporta: string;
+  summary: string;
+  deliveries: string[];
 }
 
 interface StatItemIntro {
   icon: LucideIcon;
   title: string;
   isIntro: true;
-  introText: string;
+  introText: ReactNode;
 }
 
 interface StatItemKpi {
@@ -56,13 +53,10 @@ const heroStatUiKeys = [
   "intro",
   "integracoes-entregues",
   "sustentacao-operacional",
-  "base-cro-e-mensuracao",
+  "base-tecnica-para-cro",
   "jornadas-e-lps-publicadas",
-  "rotina-de-cro-cadencia",
-  "saude-do-frete",
-  "saude-do-pagamento",
-  "evolucao-continua-releases",
-  "cro-no-funil-de-franquia-venda",
+  "evolucao-continua",
+  "cro-em-franquia-e-venda",
 ] as const;
 
 const getStatUiKey = (_stat: StatItem, index: number) =>
@@ -70,26 +64,35 @@ const getStatUiKey = (_stat: StatItem, index: number) =>
 
 const stats: StatItem[] = [
   {
-    icon: MessageCircle,
+    icon: MouseScroll as unknown as LucideIcon,
     title: "",
     isIntro: true,
-    introText:
-      "Role pelos os cards! </br> Reuni aqui meus principais indicadores dos últimos 4 anos.",
+    introText: (
+      <>
+        <strong className="font-semibold text-foreground">
+          Interaja com os cards!
+        </strong>
+        <br />
+        Reuni os meus principais indicadores dos últimos 4 anos.
+      </>
+    ),
   },
   {
     icon: Plug,
     title: "01 — Integrações entregues",
-    valueTargets: [18],
+    valueTargets: [CASES_CARD_COUNT],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "entregas de integração (UI/UX + front + regra de negócio)",
+    supportLine:
+      "entregas envolvendo UX/UI, front-end, regra de negócio e integração.",
     popup: {
       title: "Integrações entregues",
-      oQueMede:
-        "Volume de integrações e entregas técnicas implementadas e publicadas em produção.",
-      comoLer:
-        "Total acumulado de entregas com aplicação real em jornada e operação (não inclui apenas protótipo ou ajuste visual isolado).",
-      porQueImporta:
-        "Evidencia atuação híbrida ponta a ponta, conectando experiência, front-end e operação.",
+      summary: "Entregas publicadas que combinam experiência, implementação e viabilização técnica.",
+      deliveries: [
+        "Jornadas e páginas publicadas como Localpage, Black Friday ABC, LPs de campanha e páginas de produto.",
+        "Fluxos críticos implementados em login, checkout, cupons, navegação e captação de leads.",
+        "Integrações aplicadas em autenticação, Salesforce, Pipedrive, tracking, WhatsApp e operação comercial.",
+        "Frentes sustentadas com visão ponta a ponta entre UX/UI, front-end, regra de negócio e conversão.",
+      ],
     },
   },
   {
@@ -98,31 +101,34 @@ const stats: StatItem[] = [
     valueTargets: [7],
     valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "frentes/fluxos críticos com sustentação operacional recorrente",
+      "frentes críticas acompanhadas com atuação recorrente em operação, ajustes e continuidade.",
     popup: {
       title: "Sustentação operacional",
-      oQueMede:
-        "Cobertura de sustentação sobre frentes e fluxos críticos (correções, ajustes, acompanhamento e estabilidade operacional).",
-      comoLer:
-        "Pode ser apresentado em quantidade de frentes/fluxos acompanhados ou percentual de cobertura, conforme a base disponível.",
-      porQueImporta:
-        "Mostra continuidade de operação, redução de risco e manutenção da performance além de novas entregas.",
+      summary: "Atuação recorrente para manter frentes críticas estáveis e evoluindo.",
+      deliveries: [
+        "Acompanhamento contínuo de login, checkout, fluxos Prime e jornadas de captação.",
+        "Correção de comportamento, ajustes visuais e validação de regras em produção.",
+        "Suporte à operação em integrações, formulários, e-mails e fluxos com dependência técnica.",
+        "Continuidade das jornadas com menor atrito para usuário, time e negócio.",
+      ],
     },
   },
   {
     icon: BarChart3,
-    title: "03 — Base de CRO e mensuração",
-    valueTargets: [24],
+    title: "03 — Base técnica para CRO",
+    valueTargets: [50],
     valueFormat: (v) => `${Math.round(v[0])}`,
-    supportLine: "eventos críticos validados no funil (E2E)",
+    supportLine:
+      "eventos de funil revisados ponta a ponta, conectando tracking, jornada e mensuração.",
     popup: {
-      title: "Base de CRO e mensuração",
-      oQueMede:
-        "Maturidade da base de conversão via instrumentação, validação de eventos e acompanhamento do funil ponta a ponta.",
-      comoLer:
-        "Considera eventos críticos validados nas etapas do funil (PDP → Carrinho → Checkout → Pedido), com foco em consistência de mensuração.",
-      porQueImporta:
-        "Demonstra que conversão está sendo tratada com método (dados + rotina), e não apenas por percepção.",
+      title: "Base técnica para CRO",
+      summary: "Estrutura técnica para medir comportamento real e sustentar decisões de CRO.",
+      deliveries: [
+        "Revisão de eventos em etapas como login, formulário, checkout e envio de leads.",
+        "Ajuste de tracking para conectar dataLayer, funil, erros e sucesso de conversão.",
+        "Leitura ponta a ponta entre interface, implementação e mensuração.",
+        "Base mais confiável para priorizar hipóteses, identificar gargalos e acompanhar impacto.",
+      ],
     },
   },
   {
@@ -130,99 +136,53 @@ const stats: StatItem[] = [
     title: "04 — Jornadas e LPs publicadas",
     valueTargets: [12],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "LPs/hotsites e fluxos de conversão publicados",
+    supportLine:
+      "LPs, hotsites e fluxos de conversão publicados para campanhas e captação.",
     popup: {
       title: "Jornadas e LPs publicadas",
-      oQueMede:
-        "Volume de páginas, LPs/hotsites e fluxos de jornada publicados com objetivo de conversão.",
-      comoLer:
-        "Total de entregas publicadas em produção (captação, login, formulários e jornadas associadas).",
-      porQueImporta:
-        "Evidencia capacidade de transformar demanda em experiência publicada com foco em resultado.",
-    },
-  },
-  {
-    icon: Calendar,
-    title: "05 — Rotina de CRO (cadência)",
-    staticLabel: "Semanal",
-    supportLine:
-      "backlog de hipóteses, priorização e acompanhamento de releases",
-    popup: {
-      title: "Rotina de CRO",
-      oQueMede:
-        "Frequência e consistência da rotina operacional de CRO (hipóteses, acompanhamento, análise e ajustes).",
-      comoLer:
-        "Pode ser apresentado por cadência (semanal/quinzenal) e evoluído depois com volume de hipóteses/releases acompanhados.",
-      porQueImporta:
-        "Mostra operação contínua de melhoria, não apenas entregas pontuais.",
-    },
-  },
-  {
-    icon: Truck,
-    title: "06 — Saúde do frete",
-    valueTargets: [96.2],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "cotação → opção exibida, com monitoramento de falhas",
-    popup: {
-      title: "Saúde do frete",
-      oQueMede:
-        "Taxa de sucesso no fluxo de frete entre cotação e exibição de opções para o usuário.",
-      comoLer:
-        "Percentual de tentativas em que a jornada de frete retorna corretamente opções utilizáveis.",
-      porQueImporta:
-        "Frete é etapa crítica de conversão; falhas aqui impactam abandono e confiança da jornada.",
-    },
-  },
-  {
-    icon: CreditCard,
-    title: "07 — Saúde do pagamento",
-    valueTargets: [91.8],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "tentativa → aprovação, com leitura por método/etapa",
-    popup: {
-      title: "Saúde do pagamento",
-      oQueMede:
-        "Taxa de sucesso da jornada de pagamento entre tentativa e aprovação.",
-      comoLer:
-        "Percentual de transações que avançam corretamente, com análise de erros por método e etapa.",
-      porQueImporta:
-        "Pagamento é etapa final de conversão; monitorar falhas aumenta eficiência comercial e reduz perda de receita.",
+      summary: "Publicações voltadas para campanha, aquisição, captação e ativação de jornadas.",
+      deliveries: [
+        "Landing pages e hotsites de campanha colocados em produção com foco em conversão.",
+        "Fluxos de formulário, CTA e captação estruturados para reduzir atrito.",
+        "Experiências responsivas alinhadas à mensagem, oferta e objetivo comercial.",
+        "Jornadas prontas para ativação rápida em datas, campanhas e frentes de growth.",
+      ],
     },
   },
   {
     icon: GitBranch,
-    title: "08 — Evolução contínua (releases)",
+    title: "05 — Evolução contínua",
     valueTargets: [14],
     valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "melhorias/releases acompanhados por impacto em operação e conversão",
+      "melhorias e releases acompanhados com foco em operação, jornada e conversão.",
     popup: {
       title: "Evolução contínua",
-      oQueMede:
-        "Volume de melhorias e releases acompanhados dentro da rotina de evolução da plataforma.",
-      comoLer:
-        "Total de evoluções entregues/acompanhadas em período definido (ex.: ciclo/mês), com leitura por impacto.",
-      porQueImporta:
-        "Reforça previsibilidade de execução e capacidade de sustentar evolução contínua com foco em negócio.",
+      summary: "Melhorias incrementais acompanhadas até publicação e estabilização.",
+      deliveries: [
+        "Releases em páginas, componentes, fluxos e integrações com impacto real na jornada.",
+        "Ajustes orientados por operação, necessidade comercial e comportamento do usuário.",
+        "Refinamentos técnicos e visuais para manter consistência entre canais e etapas do funil.",
+        "Evolução contínua sem depender apenas de grandes projetos isolados.",
+      ],
     },
   },
   {
     icon: TrendingUp,
-    title: "09 — CRO no funil de franquia/venda",
+    title: "06 — CRO em franquia e venda",
     valueTargets: [5],
     valueFormat: (v) => `+${Math.round(v[0])}`,
     supportLine:
-      "iniciativas de CRO que impactaram conversão no funil de franquia e venda",
+      "iniciativas aplicadas aos funis de franquia, venda e captação de leads.",
     popup: {
-      title: "CRO no funil de franquia/venda",
-      oQueMede:
-        "Iniciativas de CRO (otimização de conversão) aplicadas em jornadas de franquia e venda, com impacto mensurável no funil.",
-      comoLer:
-        "Quantidade de frentes ou melhorias de CRO que impactaram diretamente o funil de captação de franqueados e conversão de vendas.",
-      porQueImporta:
-        "Evidencia atuação de CRO além do e-commerce, com impacto em canais estratégicos de crescimento (franquia e venda direta).",
+      title: "CRO em franquia e venda",
+      summary: "Otimizações aplicadas fora do e-commerce puro, com foco em geração e qualificação de demanda.",
+      deliveries: [
+        "Frentes como Programa de Indicação, LP Expansão e jornadas com captura de leads.",
+        "Fluxos conectados a WhatsApp, Salesforce, Pipedrive e operação comercial.",
+        "Ajustes de interface, formulário, CTA e rastreio para melhorar avanço no funil.",
+        "Atuação em canais estratégicos de franquia, venda consultiva e captação.",
+      ],
     },
   },
 ];
@@ -576,44 +536,47 @@ const Hero = () => {
   return (
     <section
       className="min-h-[90dvh] md:min-h-[82vh] flex flex-col justify-center pt-24 pb-10 md:pt-20 md:pb-12 px-4 md:px-6"
-      data-ui={dataUiPath("hero", "root")}
+      data-ui="hero.root"
     >
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         className={`container mx-auto max-w-5xl transition-all duration-700 ease-out flex flex-col justify-between ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
-        data-ui={dataUiPath("hero", "content")}
+        data-ui="hero.content"
       >
         <div
           className="relative z-10 mb-4 md:mb-5 md:mt-12 text-center opacity-0 animate-[fade-in_0.8s_ease-out_forwards]"
           style={{ animationDelay: "100ms" }}
-          data-ui={dataUiPath("hero", "intro")}
+          data-ui="hero.intro"
         >
           <h1
             className="text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground leading-tight mb-3 md:mb-4 break-words"
-            data-ui={dataUiPath("hero", "title")}
+            data-ui="hero.title"
           >
             Formalização da atuação{"\u00A0"}como
             <br />
-            <span className="text-primary">Tech Lead de CRO</span>
+            <span className="text-primary">
+              Coordenador de <br className="md:hidden" />
+              <span className="whitespace-nowrap">CRO &amp; UX</span>
+            </span>
           </h1>
           <p
             className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words"
-            data-ui={dataUiPath("hero", "subtitle")}
+            data-ui="hero.subtitle"
           >
-            Lidero na prática, UX/UI, front-end, integrações, sustentação e
-            evolução dos KPIs do funil.
+            Um reconhecimento ao escopo que já assumo, CRO: UX/UI, front-end,
+            tracking e integrações.
           </p>
         </div>
 
         <div
           className="relative w-full flex justify-center"
-          data-ui={dataUiPath("hero", "drum-wrap")}
+          data-ui="hero.drum-wrap"
         >
           <div
             className="mt-2 select-none overflow-visible w-full md:max-w-[70%] relative"
-            data-ui={dataUiPath("hero", "drum")}
+            data-ui="hero.drum"
           >
             <div
               ref={containerRef}
@@ -703,12 +666,7 @@ const Hero = () => {
                       >
                         <div
                           className={`relative w-full max-w-[108%] md:max-w-full -m-4 p-4 ${index !== 0 ? "cursor-pointer" : ""}`}
-                          data-ui={dataUiPath(
-                            "hero",
-                            "card",
-                            cardUiKey,
-                            "frame",
-                          )}
+                          data-ui={`hero.card.${cardUiKey}.frame`}
                           onMouseDown={
                             index !== 0
                               ? (e) => handleCardMouseDown(e, index)
@@ -736,12 +694,7 @@ const Hero = () => {
                                 ? "text-center flex flex-col items-center"
                                 : ""
                             }`}
-                            data-ui={dataUiPath(
-                              "hero",
-                              "card",
-                              cardUiKey,
-                              "body",
-                            )}
+                            data-ui={`hero.card.${cardUiKey}.body`}
                             style={{
                               borderColor: isActive
                                 ? "hsl(var(--primary) / 0.4)"
@@ -756,33 +709,18 @@ const Hero = () => {
                             {index !== 0 && (
                               <div
                                 className="absolute top-3 right-3 w-5 h-5 flex items-center justify-center opacity-50 transition-opacity duration-200 hover:opacity-100"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "info",
-                                )}
+                                data-ui={`hero.card.${cardUiKey}.info`}
                               >
                                 <Info className="w-4 h-4 text-muted-foreground" />
                               </div>
                             )}
                             <div
                               className={`flex items-center gap-3 mb-3 ${index === 0 ? "justify-center" : ""}`}
-                              data-ui={dataUiPath(
-                                "hero",
-                                "card",
-                                cardUiKey,
-                                "header",
-                              )}
+                              data-ui={`hero.card.${cardUiKey}.header`}
                             >
                               <div
                                 className="w-9 h-9 md:w-10 md:h-10 rounded-lg flex items-center justify-center shrink-0"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "icon",
-                                )}
+                                data-ui={`hero.card.${cardUiKey}.icon`}
                                 style={{
                                   backgroundColor: isActive
                                     ? "hsl(var(--primary) / 0.2)"
@@ -801,12 +739,7 @@ const Hero = () => {
                               {!isIntro && (
                                 <span
                                   className="text-xs md:text-sm text-muted-foreground"
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "title",
-                                  )}
+                                  data-ui={`hero.card.${cardUiKey}.title`}
                                 >
                                   {stat.title}
                                 </span>
@@ -814,34 +747,19 @@ const Hero = () => {
                             </div>
                             {isIntro ? (
                               <p
-                                className="text-foreground/85 font-normal text-base md:text-lg leading-snug"
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "text",
-                                )}
+                                className="whitespace-pre-line text-foreground/85 font-normal text-base md:text-lg leading-snug"
+                                data-ui={`hero.card.${cardUiKey}.text`}
                               >
                                 {valueDisplay}
                               </p>
                             ) : (
                               <div
                                 className={`flex items-baseline ${kpiVeryShort ? "gap-x-0.5" : kpiShortDisplay ? "gap-x-0.5" : "gap-x-1.5"}`}
-                                data-ui={dataUiPath(
-                                  "hero",
-                                  "card",
-                                  cardUiKey,
-                                  "metric",
-                                )}
+                                data-ui={`hero.card.${cardUiKey}.metric`}
                               >
                                 <div
                                   className={`shrink-0 ${kpiVeryShort ? "min-w-[1.25rem] md:min-w-[1.5rem]" : kpiShortDisplay ? "min-w-[2rem] md:min-w-[2.5rem]" : "min-w-[2.5rem] md:min-w-[3rem]"}`}
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "value",
-                                  )}
+                                  data-ui={`hero.card.${cardUiKey}.value`}
                                 >
                                   <span
                                     className={`text-lg md:text-xl font-semibold text-foreground inline-block origin-center ${
@@ -849,25 +767,14 @@ const Hero = () => {
                                         ? "animate-value-count-pop"
                                         : ""
                                     }`}
-                                    data-ui={dataUiPath(
-                                      "hero",
-                                      "card",
-                                      cardUiKey,
-                                      "value",
-                                      "text",
-                                    )}
+                                    data-ui={`hero.card.${cardUiKey}.value.text`}
                                   >
                                     {valueDisplay}
                                   </span>
                                 </div>
                                 <span
                                   className="text-sm md:text-base font-light text-foreground/75"
-                                  data-ui={dataUiPath(
-                                    "hero",
-                                    "card",
-                                    cardUiKey,
-                                    "support-line",
-                                  )}
+                                  data-ui={`hero.card.${cardUiKey}.support-line`}
                                 >
                                   {kpiStat?.supportLine}
                                 </span>
@@ -910,7 +817,7 @@ const Hero = () => {
 
             <div
               className="relative z-10 flex justify-center gap-1.5 mt-14 md:mt-16 md:gap-2"
-              data-ui={dataUiPath("hero", "dots")}
+              data-ui="hero.dots"
             >
               {stats.map((_, i) => {
                 const isActive = activeIndex === i;
@@ -919,7 +826,7 @@ const Hero = () => {
                     key={i}
                     onClick={() => goToCard(i)}
                     aria-label={`Card ${i + 1}`}
-                    data-ui={dataUiPath("hero", "dot", i + 1)}
+                    data-ui={`hero.dot.${i + 1}`}
                     className="rounded-full border-0 cursor-pointer transition-all duration-300 shrink-0"
                     style={{
                       width: isMobile ? (isActive ? 14 : 4) : isActive ? 18 : 6,
@@ -936,7 +843,7 @@ const Hero = () => {
             </div>
             <div
               className="relative z-10 flex justify-center mt-8 md:mt-10 pb-1"
-              data-ui={dataUiPath("hero", "scroll-next", "wrap")}
+              data-ui="hero.scroll-next.wrap"
             >
               <button
                 onClick={() =>
@@ -946,7 +853,7 @@ const Hero = () => {
                 }
                 aria-label="Ir para próxima seção"
                 className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full border border-primary/25 bg-primary/5 text-primary/80 hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-300 animate-arrow-float-subtle"
-                data-ui={dataUiPath("hero", "scroll-next")}
+                data-ui="hero.scroll-next"
               >
                 <ChevronDown className="w-5 h-5 md:w-5 md:h-5" />
               </button>
@@ -973,20 +880,20 @@ const Hero = () => {
         "popup" in stats[openModalIndex] && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-modal-fade-in"
-            data-ui={dataUiPath("hero", "modal")}
+            data-ui="hero.modal"
             onClick={() => setOpenModalIndex(null)}
           >
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
             <div
               className="relative z-10 w-full max-w-md bg-card border border-border rounded-2xl p-6 shadow-2xl animate-modal-scale-in"
-              data-ui={dataUiPath("hero", "modal", "content")}
+              data-ui="hero.modal.content"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setOpenModalIndex(null)}
                 className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-muted transition-colors duration-200"
                 aria-label="Fechar"
-                data-ui={dataUiPath("hero", "modal", "close")}
+                data-ui="hero.modal.close"
               >
                 <X className="w-5 h-5 text-muted-foreground" />
               </button>
@@ -998,50 +905,44 @@ const Hero = () => {
                   <>
                     <div
                       className="flex items-center gap-4 mb-4"
-                      data-ui={dataUiPath("hero", "modal", "header")}
+                      data-ui="hero.modal.header"
                     >
                       <div
                         className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center shrink-0"
-                        data-ui={dataUiPath("hero", "modal", "icon")}
+                        data-ui="hero.modal.icon"
                       >
                         <Icon className="w-6 h-6 text-primary" />
                       </div>
                       <h3
                         className="text-lg font-semibold text-foreground"
-                        data-ui={dataUiPath("hero", "modal", "title")}
+                        data-ui="hero.modal.title"
                       >
                         {pop.title}
                       </h3>
                     </div>
                     <div
                       className="space-y-4 text-sm text-muted-foreground leading-relaxed"
-                      data-ui={dataUiPath("hero", "modal", "body")}
+                      data-ui="hero.modal.body"
                     >
-                      <div
-                        data-ui={dataUiPath("hero", "modal", "body", "measure")}
+                      <p data-ui="hero.modal.body.summary">{pop.summary}</p>
+                      <ul
+                        className="space-y-2"
+                        data-ui="hero.modal.body.deliveries"
                       >
-                        <span className="font-medium text-foreground">
-                          O que mede:{" "}
-                        </span>
-                        {pop.oQueMede}
-                      </div>
-                      <div
-                        data-ui={dataUiPath("hero", "modal", "body", "read")}
-                      >
-                        <span className="font-medium text-foreground">
-                          Como ler:{" "}
-                        </span>
-                        {pop.comoLer}
-                      </div>
-                      <div data-ui={dataUiPath("hero", "modal", "body", "why")}>
-                        <span className="font-medium text-foreground">
-                          Por que importa:{" "}
-                        </span>
-                        {pop.porQueImporta}
-                      </div>
-                    </div>
-                  </>
-                );
+                        {pop.deliveries.map((item, index) => (
+                          <li
+                            key={index}
+                            className="flex gap-2 items-start"
+                            data-ui={`hero.modal.body.deliveries.item.${index + 1}`}
+                          >
+                            <span className="mt-[0.45rem] h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+            </div>
+          </div>
+        )}
               })()}
             </div>
           </div>

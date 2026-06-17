@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/carousel";
 import { useInView } from "@/hooks/use-in-view";
 import { shuffleArray, uniqueCases } from "@/components/cases-utils";
+import Autoplay from "embla-carousel-autoplay";
 interface CaseItem {
   id: number;
   title: string;
@@ -553,23 +554,6 @@ const cases: CaseItem[] = [
     evidence: "[LINK_40]",
     year: 2022,
   },
-  createGenericCase(
-    41,
-    "LP Semana do Consumidor",
-    "/cases/25-lp-semana-do-consumidor.jpg",
-    ["CRO", "Front-end", "Campanha"],
-  ),
-  createGenericCase(42, "Ofertas Mensais", "/cases/40-Ofertas-Mensais.png", [
-    "CRO",
-    "Front-end",
-    "Campanha",
-  ]),
-  createGenericCase(
-    43,
-    "Campanha Viver Ambientes",
-    "/cases/41-Campanha-Viver-ambientes.png",
-    ["CRO", "Front-end", "Campanha"],
-  ),
 ];
 
 const casesForDedup = cases.map((caseItem) => ({
@@ -584,18 +568,66 @@ const shuffledCases = shuffleArray(dedupedCases);
 const hasRenderableImage = (src: string) =>
   src.startsWith("/") || src.startsWith("http");
 
+const CASES_CARD_MEDIA_UI = [
+  "cases.card.1.media",
+  "cases.card.2.media",
+  "cases.card.3.media",
+  "cases.card.4.media",
+  "cases.card.5.media",
+  "cases.card.6.media",
+  "cases.card.7.media",
+  "cases.card.8.media",
+  "cases.card.9.media",
+  "cases.card.10.media",
+  "cases.card.11.media",
+  "cases.card.12.media",
+  "cases.card.13.media",
+  "cases.card.14.media",
+  "cases.card.15.media",
+  "cases.card.16.media",
+  "cases.card.17.media",
+  "cases.card.18.media",
+  "cases.card.19.media",
+  "cases.card.20.media",
+  "cases.card.21.media",
+  "cases.card.22.media",
+  "cases.card.23.media",
+  "cases.card.24.media",
+  "cases.card.25.media",
+  "cases.card.26.media",
+  "cases.card.27.media",
+  "cases.card.28.media",
+  "cases.card.29.media",
+  "cases.card.30.media",
+  "cases.card.31.media",
+  "cases.card.32.media",
+  "cases.card.33.media",
+  "cases.card.34.media",
+  "cases.card.35.media",
+  "cases.card.36.media",
+  "cases.card.37.media",
+  "cases.card.38.media",
+  "cases.card.39.media",
+  "cases.card.40.media",
+  "cases.card.41.media",
+] as const;
+
 const Cases = () => {
   const [selectedCase, setSelectedCase] = useState<CaseItem | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const autoScrollRafRef = useRef<number>();
-  const autoScrollLastTimeRef = useRef<number>();
+  const autoplay = useRef(
+    Autoplay({
+      delay: 4000,
+      stopOnFocusIn: false,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+    }),
+  );
   const dragGestureRef = useRef<{
     startX: number;
     startY: number;
   } | null>(null);
-
-  const AUTO_SCROLL_PX_PER_SECOND = 30;
 
   useEffect(() => {
     if (!api) return;
@@ -608,40 +640,6 @@ const Cases = () => {
       api.off("select", onSelect);
     };
   }, [api]);
-
-  useEffect(() => {
-    if (!api) return;
-    if (typeof api.internalEngine !== "function") return;
-
-    const engine = api.internalEngine();
-
-    const tick = (time: number) => {
-      if (autoScrollLastTimeRef.current == null) {
-        autoScrollLastTimeRef.current = time;
-      }
-
-      const deltaMs = time - autoScrollLastTimeRef.current;
-      autoScrollLastTimeRef.current = time;
-
-      if (!engine.dragHandler.pointerDown() && !selectedCase) {
-        const distance = (AUTO_SCROLL_PX_PER_SECOND * deltaMs) / 1000;
-        engine.scrollBody.useBaseFriction().useDuration(0);
-        engine.scrollTo.distance(distance, false);
-      }
-
-      autoScrollRafRef.current = window.requestAnimationFrame(tick);
-    };
-
-    autoScrollRafRef.current = window.requestAnimationFrame(tick);
-
-    return () => {
-      if (autoScrollRafRef.current !== undefined) {
-        window.cancelAnimationFrame(autoScrollRafRef.current);
-      }
-      autoScrollRafRef.current = undefined;
-      autoScrollLastTimeRef.current = undefined;
-    };
-  }, [api, selectedCase]);
 
   const { ref, isVisible } = useInView();
 
@@ -753,9 +751,10 @@ const Cases = () => {
           setApi={setApi}
           opts={{
             align: "center",
-            dragFree: true,
             loop: true,
+            duration: 240,
           }}
+          plugins={[autoplay.current]}
           className="w-full cursor-grab active:cursor-grabbing select-none"
           data-ui="cases.carousel"
         >
@@ -787,7 +786,7 @@ const Cases = () => {
                   )}
                   <div
                     className="aspect-video w-full rounded-xl bg-secondary/50 border border-border/50 mb-4 flex items-center justify-center relative overflow-hidden"
-                    data-ui={`cases.card.${index + 1}.media`}
+                    data-ui={CASES_CARD_MEDIA_UI[caseItem.id - 1]}
                   >
                     {hasRenderableImage(caseItem.src) ? (
                       <img

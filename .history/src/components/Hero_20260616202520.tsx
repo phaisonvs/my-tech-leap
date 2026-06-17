@@ -1,12 +1,8 @@
 import {
-  MessageCircle,
   Plug,
   Shield,
   BarChart3,
   Layout,
-  Calendar,
-  Truck,
-  CreditCard,
   GitBranch,
   TrendingUp,
   ChevronDown,
@@ -14,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import MouseScroll from "@/components/icons/MouseScroll";
 import { useInView } from "@/hooks/use-in-view";
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
@@ -56,13 +53,10 @@ const heroStatUiKeys = [
   "intro",
   "integracoes-entregues",
   "sustentacao-operacional",
-  "base-cro-e-mensuracao",
+  "base-tecnica-para-cro",
   "jornadas-e-lps-publicadas",
-  "rotina-de-cro-cadencia",
-  "saude-do-frete",
-  "saude-do-pagamento",
-  "evolucao-continua-releases",
-  "cro-no-funil-de-franquia-venda",
+  "evolucao-continua",
+  "cro-em-franquia-e-venda",
 ] as const;
 
 const getStatUiKey = (_stat: StatItem, index: number) =>
@@ -70,7 +64,7 @@ const getStatUiKey = (_stat: StatItem, index: number) =>
 
 const stats: StatItem[] = [
   {
-    icon: MessageCircle,
+    icon: MouseScroll as unknown as LucideIcon,
     title: "",
     isIntro: true,
     introText: (
@@ -88,15 +82,16 @@ const stats: StatItem[] = [
     title: "01 — Integrações entregues",
     valueTargets: [18],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "entregas de integração (UI/UX + front + regra de negócio)",
+    supportLine:
+      "entregas envolvendo UX/UI, front-end, regra de negócio e integração.",
     popup: {
       title: "Integrações entregues",
       oQueMede:
-        "Volume de integrações e entregas técnicas implementadas e publicadas em produção.",
+        "Volume de entregas que combinam experiência, front-end, regra de negócio e integração aplicada em produção.",
       comoLer:
-        "Total acumulado de entregas com aplicação real em jornada e operação (não inclui apenas protótipo ou ajuste visual isolado).",
+        "Total acumulado de entregas com aplicação real em jornada e operação, indo além de ajustes visuais isolados.",
       porQueImporta:
-        "Evidencia atuação híbrida ponta a ponta, conectando experiência, front-end e operação.",
+        "Evidencia atuação híbrida ponta a ponta, conectando UX/UI, implementação e viabilização técnica.",
     },
   },
   {
@@ -105,31 +100,32 @@ const stats: StatItem[] = [
     valueTargets: [7],
     valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "frentes/fluxos críticos com sustentação operacional recorrente",
+      "frentes críticas acompanhadas com atuação recorrente em operação, ajustes e continuidade.",
     popup: {
       title: "Sustentação operacional",
       oQueMede:
-        "Cobertura de sustentação sobre frentes e fluxos críticos (correções, ajustes, acompanhamento e estabilidade operacional).",
+        "Quantidade de frentes críticas acompanhadas com atuação recorrente em operação, ajustes e continuidade.",
       comoLer:
-        "Pode ser apresentado em quantidade de frentes/fluxos acompanhados ou percentual de cobertura, conforme a base disponível.",
+        "Leitura em número de frentes acompanhadas de forma contínua, cobrindo correções, ajustes e estabilidade operacional.",
       porQueImporta:
-        "Mostra continuidade de operação, redução de risco e manutenção da performance além de novas entregas.",
+        "Mostra capacidade de sustentar a operação no dia a dia, reduzindo risco e mantendo a continuidade das jornadas.",
     },
   },
   {
     icon: BarChart3,
-    title: "03 — Base de CRO e mensuração",
-    valueTargets: [24],
+    title: "03 — Base técnica para CRO",
+    valueTargets: [50],
     valueFormat: (v) => `${Math.round(v[0])}`,
-    supportLine: "eventos críticos validados no funil (E2E)",
+    supportLine:
+      "eventos de funil revisados ponta a ponta, conectando tracking, jornada e mensuração.",
     popup: {
-      title: "Base de CRO e mensuração",
+      title: "Base técnica para CRO",
       oQueMede:
-        "Maturidade da base de conversão via instrumentação, validação de eventos e acompanhamento do funil ponta a ponta.",
+        "Volume de eventos de funil revisados ponta a ponta para garantir consistência entre tracking, jornada e mensuração.",
       comoLer:
-        "Considera eventos críticos validados nas etapas do funil (PDP → Carrinho → Checkout → Pedido), com foco em consistência de mensuração.",
+        "Considera eventos mapeados e revisados ao longo do funil, assegurando leitura confiável das etapas da jornada.",
       porQueImporta:
-        "Demonstra que conversão está sendo tratada com método (dados + rotina), e não apenas por percepção.",
+        "Cria base técnica confiável para decisões de CRO, evitando análises frágeis ou desconectadas da implementação.",
     },
   },
   {
@@ -137,99 +133,50 @@ const stats: StatItem[] = [
     title: "04 — Jornadas e LPs publicadas",
     valueTargets: [12],
     valueFormat: (v) => `+${Math.round(v[0])}`,
-    supportLine: "LPs/hotsites e fluxos de conversão publicados",
+    supportLine:
+      "LPs, hotsites e fluxos de conversão publicados para campanhas e captação.",
     popup: {
       title: "Jornadas e LPs publicadas",
       oQueMede:
-        "Volume de páginas, LPs/hotsites e fluxos de jornada publicados com objetivo de conversão.",
+        "Volume de LPs, hotsites e fluxos de conversão publicados para campanhas, captação e ativação de jornadas.",
       comoLer:
-        "Total de entregas publicadas em produção (captação, login, formulários e jornadas associadas).",
+        "Total de entregas colocadas em produção com objetivo de captar, converter ou destravar fluxos de campanha.",
       porQueImporta:
-        "Evidencia capacidade de transformar demanda em experiência publicada com foco em resultado.",
-    },
-  },
-  {
-    icon: Calendar,
-    title: "05 — Rotina de CRO (cadência)",
-    staticLabel: "Semanal",
-    supportLine:
-      "backlog de hipóteses, priorização e acompanhamento de releases",
-    popup: {
-      title: "Rotina de CRO",
-      oQueMede:
-        "Frequência e consistência da rotina operacional de CRO (hipóteses, acompanhamento, análise e ajustes).",
-      comoLer:
-        "Pode ser apresentado por cadência (semanal/quinzenal) e evoluído depois com volume de hipóteses/releases acompanhados.",
-      porQueImporta:
-        "Mostra operação contínua de melhoria, não apenas entregas pontuais.",
-    },
-  },
-  {
-    icon: Truck,
-    title: "06 — Saúde do frete",
-    valueTargets: [96.2],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "cotação → opção exibida, com monitoramento de falhas",
-    popup: {
-      title: "Saúde do frete",
-      oQueMede:
-        "Taxa de sucesso no fluxo de frete entre cotação e exibição de opções para o usuário.",
-      comoLer:
-        "Percentual de tentativas em que a jornada de frete retorna corretamente opções utilizáveis.",
-      porQueImporta:
-        "Frete é etapa crítica de conversão; falhas aqui impactam abandono e confiança da jornada.",
-    },
-  },
-  {
-    icon: CreditCard,
-    title: "07 — Saúde do pagamento",
-    valueTargets: [91.8],
-    valueFormat: (v) => `${v[0].toFixed(1).replace(".", ",")}%`,
-    decimals: [1],
-    supportLine: "tentativa → aprovação, com leitura por método/etapa",
-    popup: {
-      title: "Saúde do pagamento",
-      oQueMede:
-        "Taxa de sucesso da jornada de pagamento entre tentativa e aprovação.",
-      comoLer:
-        "Percentual de transações que avançam corretamente, com análise de erros por método e etapa.",
-      porQueImporta:
-        "Pagamento é etapa final de conversão; monitorar falhas aumenta eficiência comercial e reduz perda de receita.",
+        "Evidencia capacidade de transformar demanda em experiência publicada com foco direto em aquisição e conversão.",
     },
   },
   {
     icon: GitBranch,
-    title: "08 — Evolução contínua (releases)",
+    title: "05 — Evolução contínua",
     valueTargets: [14],
     valueFormat: (v) => `${Math.round(v[0])}`,
     supportLine:
-      "melhorias/releases acompanhados por impacto em operação e conversão",
+      "melhorias e releases acompanhados com foco em operação, jornada e conversão.",
     popup: {
       title: "Evolução contínua",
       oQueMede:
-        "Volume de melhorias e releases acompanhados dentro da rotina de evolução da plataforma.",
+        "Volume de melhorias e releases acompanhados com foco em operação, jornada e conversão.",
       comoLer:
-        "Total de evoluções entregues/acompanhadas em período definido (ex.: ciclo/mês), com leitura por impacto.",
+        "Total de evoluções implementadas ou acompanhadas dentro de uma rotina contínua de melhoria da plataforma.",
       porQueImporta:
-        "Reforça previsibilidade de execução e capacidade de sustentar evolução contínua com foco em negócio.",
+        "Mostra capacidade de sustentar melhoria contínua com impacto prático na operação e na performance da jornada.",
     },
   },
   {
     icon: TrendingUp,
-    title: "09 — CRO no funil de franquia/venda",
+    title: "06 — CRO em franquia e venda",
     valueTargets: [5],
     valueFormat: (v) => `+${Math.round(v[0])}`,
     supportLine:
-      "iniciativas de CRO que impactaram conversão no funil de franquia e venda",
+      "iniciativas aplicadas aos funis de franquia, venda e captação de leads.",
     popup: {
-      title: "CRO no funil de franquia/venda",
+      title: "CRO em franquia e venda",
       oQueMede:
-        "Iniciativas de CRO (otimização de conversão) aplicadas em jornadas de franquia e venda, com impacto mensurável no funil.",
+        "Quantidade de iniciativas de CRO aplicadas aos funis de franquia, venda e captação de leads.",
       comoLer:
-        "Quantidade de frentes ou melhorias de CRO que impactaram diretamente o funil de captação de franqueados e conversão de vendas.",
+        "Conta frentes de otimização que impactaram diretamente jornadas de aquisição, qualificação ou conversão nesses funis.",
       porQueImporta:
-        "Evidencia atuação de CRO além do e-commerce, com impacto em canais estratégicos de crescimento (franquia e venda direta).",
+        "Evidencia atuação de CRO além do e-commerce, com impacto em canais estratégicos de crescimento e geração de demanda.",
     },
   },
 ];
@@ -603,14 +550,17 @@ const Hero = () => {
           >
             Formalização da atuação{"\u00A0"}como
             <br />
-            <span className="text-primary">Coordenador de CRO &amp; UX</span>
+            <span className="text-primary">
+              Coordenador de <br className="md:hidden" />
+              <span className="whitespace-nowrap">CRO &amp; UX</span>
+            </span>
           </h1>
           <p
             className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto leading-snug md:leading-normal break-words"
             data-ui="hero.subtitle"
           >
-            Um reconhecimento ao escopo que já assumo, conectando UX/UI, CRO,
-            front-end, tracking e integrações.
+            Um reconhecimento ao escopo que já assumo, CRO: UX/UI, front-end,
+            tracking e integrações.
           </p>
         </div>
 
@@ -968,17 +918,13 @@ const Hero = () => {
                       className="space-y-4 text-sm text-muted-foreground leading-relaxed"
                       data-ui="hero.modal.body"
                     >
-                      <div
-                        data-ui="hero.modal.body.measure"
-                      >
+                      <div data-ui="hero.modal.body.measure">
                         <span className="font-medium text-foreground">
                           O que mede:{" "}
                         </span>
                         {pop.oQueMede}
                       </div>
-                      <div
-                        data-ui="hero.modal.body.read"
-                      >
+                      <div data-ui="hero.modal.body.read">
                         <span className="font-medium text-foreground">
                           Como ler:{" "}
                         </span>
